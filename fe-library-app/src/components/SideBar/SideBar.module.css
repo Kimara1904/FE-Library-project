@@ -1,0 +1,16 @@
+.sideBar {
+    display: block;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    min-height: 100vh;
+    width: 50%;
+    z-index: 90;
+    background-color: #282c34;
+    color:white;
+    opacity: 0.9;
+}
+
+.sideBarHidden {
+    display: none;
+}

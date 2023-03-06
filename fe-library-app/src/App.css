@@ -2,6 +2,7 @@
   text-align: center;
   position:relative;
   height: 100vh;
+  padding-top: 2%;
 }
 
 .App-logo {
@@ -19,19 +20,16 @@
   height: 90%;
 }
 
-.App-header {
+.App-footer {
   background-color: #282c34;
   min-height: 10%;
   position: fixed;
   right: 0;
   left: 0;
   bottom: 0;
-  /* display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
+  z-index: 100;
 }
 
 .App-link {
