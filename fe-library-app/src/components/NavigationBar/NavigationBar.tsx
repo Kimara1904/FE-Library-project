@@ -11,7 +11,7 @@ const NavigationBar = (props: {onNavClick: () => void}) => (
       <li>
         <Link to='/profile'>Profile</Link>
       </li>
-      <li>
+      <li className={styles.special}>
         <button onClick={props.onNavClick}>More</button>
       </li>
     </ul>

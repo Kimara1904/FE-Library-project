@@ -18,9 +18,10 @@ function App() {
       <div className='App'>
         <div className='App-sideBar'>
           <NavigationBar onNavClick={onNavClickHandler} />
-          <SideBar display={sideBarOn} />
+          <SideBar display={true} />
         </div>
         <main className='App-main'>
+          <SideBar display={sideBarOn} />
           <AppRouter />
         </main>
         <footer className='App-footer'>

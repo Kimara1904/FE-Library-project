@@ -27,5 +27,8 @@
     }
     .nav li {
         margin-top: 50px;
-    }    
+    }
+    .special{
+        display: none;
+    }
 }
