@@ -1,7 +1,16 @@
-.home button {
-    margin-left: 4px;
-    background-color: #282c34;
-    color:white;
-    border-radius: 30px;
-    height: 30px;
+@media only screen and (min-width: 768px){
+    .home{
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+    }
+    .screen_search{        
+        background-color: var(--orange_color);
+        display: flex;
+        min-height: 64px;
+        position: sticky;
+        top: 0;
+        justify-content: center;
+        align-items: center;
+    }
 }

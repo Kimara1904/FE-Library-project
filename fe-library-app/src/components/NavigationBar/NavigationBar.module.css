@@ -18,3 +18,14 @@
     text-decoration: underline;
 }
 
+@media only screen and (min-width: 768px){ 
+    .nav ul{
+        display: flexbox;
+        flex-direction: column;
+        min-height: 100vh;
+        justify-content: flex-start;
+    }
+    .nav li {
+        margin-top: 50px;
+    }    
+}

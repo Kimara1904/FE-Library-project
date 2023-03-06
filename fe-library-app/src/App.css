@@ -1,3 +1,4 @@
+@import "./variables.css";
 .App {
   text-align: center;
   position:relative;
@@ -21,7 +22,7 @@
 }
 
 .App-footer {
-  background-color: #282c34;
+  background-color: var(--dark_color);
   min-height: 10%;
   position: fixed;
   right: 0;
@@ -30,6 +31,14 @@
   font-size: calc(10px + 2vmin);
   color: white;
   z-index: 100;
+}
+
+.App-sideBar{
+  display: none;
+}
+
+.App-header{
+  display: none;
 }
 
 .App-link {
@@ -42,5 +51,34 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (min-width: 768px){ 
+  .App{
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .App-main{
+    width: calc(100% - var(--sidebar_width));
+    position: sticky;
+    float: right;
+    margin-left: var(--sidebar_width);
+    height: 100%;
+  }
+  .App-footer{
+    display: none;
+  }
+  .App-sideBar{
+    display: block;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    min-height: 100vh;
+    width: var(--sidebar_width);
+    z-index: 90;
+    background-color: var(--dark_color);
+    color:white;
   }
 }

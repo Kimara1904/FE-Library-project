@@ -16,12 +16,15 @@ function App() {
   return (
     <BrowserRouter>
       <div className='App'>
+        <div className='App-sideBar'>
+          <NavigationBar onNavClick={onNavClickHandler} />
+          <SideBar display={sideBarOn} />
+        </div>
         <main className='App-main'>
           <AppRouter />
-          <SideBar display={sideBarOn}/>
         </main>
         <footer className='App-footer'>
-          <NavigationBar onNavClick={onNavClickHandler}/>
+          <NavigationBar onNavClick={onNavClickHandler} />
         </footer>
       </div>
     </BrowserRouter>
