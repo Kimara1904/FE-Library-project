@@ -5,7 +5,7 @@ import Search from '../Search/Search'
 import style from './BookSearch.module.css'
 
 const BookSearch = () => {
-  const [ showFilter, setShowFilter ] = useState<boolean>(false)
+  const [ showFilter, setShowFilter ] = useState(false)
 
   const onFilterHandler = () => {
     setShowFilter((pervState) => !pervState)

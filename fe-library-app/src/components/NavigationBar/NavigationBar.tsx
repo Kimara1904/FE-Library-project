@@ -2,7 +2,11 @@ import { Link } from 'react-router-dom'
 
 import styles from './NavigationBar.module.css'
 
-const NavigationBar = (props: {onNavClick: () => void}) => (
+interface NavigationBarProps {
+  onNavClick: () => void
+}
+
+const NavigationBar = (props: NavigationBarProps) => (
   <nav className={styles.nav}>
     <ul>
       <li>

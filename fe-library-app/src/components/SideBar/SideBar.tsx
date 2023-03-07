@@ -1,9 +1,12 @@
 import styles from './SideBar.module.css'
 
-const SideBar = (props: { display: boolean }) => {
-  const style = props.display === true ? styles.sideBar : styles.sideBarHidden
+interface SideBarProps {
+  display: boolean
+}
+
+const SideBar = (props: SideBarProps) => {
   return (
-    <nav className={style}>
+    <nav className={props.display === true ? styles.sideBar : styles.sideBarHidden}>
       <span>Admins functions</span>
     </nav>
   )
