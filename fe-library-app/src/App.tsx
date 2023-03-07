@@ -1,24 +1,34 @@
-import logo from './logo.svg'
+import { useState } from 'react'
+
+import { BrowserRouter } from 'react-router-dom'
+
 import './App.css'
+import AppRouter from './components/AppRouter/AppRouter'
+import NavigationBar from './components/NavigationBar/NavigationBar'
+import SideBar from './components/SideBar/SideBar'
 
 function App() {
+  const [ sideBarOn, setSideBarOn ] = useState(false)
+
+  const onNavClickHandler = () => {
+    setSideBarOn((pervState) => !pervState)
+  }
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className='App'>
+        <div className='App-sideBar'>
+          <NavigationBar onNavClick={onNavClickHandler} />
+          <SideBar display={true} />
+        </div>
+        <main className='App-main'>
+          <SideBar display={sideBarOn} />
+          <AppRouter />
+        </main>
+        <footer className='App-footer'>
+          <NavigationBar onNavClick={onNavClickHandler} />
+        </footer>
+      </div>
+    </BrowserRouter>
   )
 }
 
