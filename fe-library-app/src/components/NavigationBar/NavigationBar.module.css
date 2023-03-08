@@ -13,9 +13,18 @@
 .nav a{
     color:white
 }
-.nav button{
+.special button{
     all: unset;
     text-decoration: underline;
+}
+
+.login_button{
+    border-radius: 30px;
+    height: 40px;
+    width: 70px;
+    background-color: var(--orange_color);
+    color: white;
+    font-size: 16px;
 }
 
 @media only screen and (min-width: 768px){ 
@@ -28,7 +37,8 @@
     .nav li {
         margin-top: 50px;
     }
-    .special{
+    .special,
+    .login_button{
         display: none;
     }
 }

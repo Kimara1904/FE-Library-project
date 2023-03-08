@@ -2,13 +2,17 @@ import { useState } from 'react'
 
 import Filter from '../Filter/Filter'
 import Search from '../Search/Search'
-import style from './BookSearch.module.css'
+import style from './SearchBar.module.css'
 
-const BookSearch = () => {
+const SearchBar = () => {
   const [ showFilter, setShowFilter ] = useState(false)
 
   const onFilterHandler = () => {
     setShowFilter((pervState) => !pervState)
+  }
+
+  const logoutHandler = () => {
+    sessionStorage.removeItem('token')
   }
 
   return (
@@ -16,10 +20,12 @@ const BookSearch = () => {
       <Search />
       <button onClick={onFilterHandler}>Filter</button>
       <button>^</button>
-      <a href='./'>Logout</a>
+      <div>
+        <a className={style.logout_link} href='./login' onClick={logoutHandler}>{sessionStorage.getItem('token') != null ? 'Logout' : 'Login'}</a>
+      </div>
       {showFilter && <Filter />}
     </div>
   )
 }
 
-export default BookSearch
+export default SearchBar

@@ -7,8 +7,9 @@ import ProfilePage from './pages/ProfilePage'
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path='/' element={<LoginPage />} />
+      <Route path='/' element={<HomePage />} />
       <Route path='/home' element={<HomePage />} />
+      <Route path='/login' element={<LoginPage />} />
       <Route path='profile' element={<ProfilePage />} />
     </Routes>
   )
