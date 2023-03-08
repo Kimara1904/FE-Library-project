@@ -1,0 +1,52 @@
+@import '../../../variables.css';
+.login_form {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: auto;
+    width: 70%;
+}
+
+.login_form form{
+    background-color: var(--orange_color);
+    align-self: center;
+    height: 8rem;
+    border-radius: 10px;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login_form input{
+    float: right;
+    height: 25px;
+    width: 60%;
+    border-radius: 30px;
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+.login_form label{
+    float: left;
+}
+
+.login_button,
+.login_button_unable {
+float: right;
+border-radius: 30px;
+height: 35px;
+width: 70px;
+margin-left: auto;
+}
+
+.login_button {
+background-color: var(--dark_color);
+color:white;
+}
+
+.login_button_unable {
+background-color: var(--gray_color);
+pointer-events: none;
+color:gray;
+}
