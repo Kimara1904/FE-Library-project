@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 
+import { baseUrl } from './ServiceConfig'
+
 export interface LoginResponse{
     accessToken: string,
     refreshToken: string,
@@ -11,5 +13,5 @@ export const login = (email: string, password: string): Promise<AxiosResponse<Lo
     email,
     password
   }
-  return axios.post<LoginResponse>('https://library-practice-app.azurewebsites.net/api/Auth/login', loginInfo)
+  return axios.post<LoginResponse>(baseUrl + '/api/Auth/login', loginInfo)
 }
