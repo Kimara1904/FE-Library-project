@@ -9,6 +9,8 @@ interface NavigationBarProps {
 const NavigationBar = (props: NavigationBarProps) => {
   const nav = useNavigate()
 
+  const loggedIn = sessionStorage.getItem('token') != null
+
   const loginClickHandler = () => {
     nav('/login')
   }
@@ -18,17 +20,17 @@ const NavigationBar = (props: NavigationBarProps) => {
         <li>
           <Link to='/home'>Home</Link>
         </li>
-        {sessionStorage.getItem('token') != null && (
+        {loggedIn && (
           <li>
             <Link to='/profile'>Profile</Link>
           </li>
         )}
-        {sessionStorage.getItem('token') != null && (
+        {loggedIn && (
           <li className={styles.special}>
             <button onClick={props.onNavClick}>More</button>
           </li>
         )}
-        {sessionStorage.getItem('token') == null && (
+        {!loggedIn && (
           <button className={styles.login_button} onClick={loginClickHandler}>
             Login
           </button>
