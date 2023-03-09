@@ -32,10 +32,10 @@ const HomePage = () => {
       <div className={styles.screen_search}>
         <SearchBar />
       </div>
+      <h1 className={styles.home_content}>Books: </h1>
       <div>
         <BookList books={bookList}/>
       </div>
-      <div className={styles.home_content}>Home</div>
     </div>
   )
 }

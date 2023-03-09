@@ -9,7 +9,7 @@ const BookList = (props: BookListProps) => {
   return (
     <div>
       {props.books.map((book) => {
-        return <Book key={book.isbn} />
+        return <Book key={book.id} book={book} />
       })}
     </div>
   )
