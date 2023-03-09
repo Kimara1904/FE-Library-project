@@ -1,0 +1,109 @@
+@import '../../../variables.css';
+.login_form {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: auto;
+    width: 70%;
+}
+
+.login_form form{
+    background-color: var(--orange_color);
+    align-self: center;
+    height: 11rem;
+    border-radius: 10px;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login_form input{
+    float: right;
+    height: 30px;
+    width: 60%;
+    border-radius: 30px;
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+
+.login_input_invalid{
+    border: solid 2px red;
+}
+
+.login_label_desc{
+    float: left;
+    font-weight: bold;
+    color: white;
+}
+
+.success_login_input,
+.err_login_input,
+.success_login_credentials,
+.err_login_credentials{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.success_login_input,
+.err_login_input{
+    margin-left: auto;
+    font-size: 14px;
+}
+
+.success_login_input,
+.success_login_credentials{
+    color:transparent
+}
+
+.err_login_input,
+.err_login_credentials{
+    color: red;
+}
+
+.form_div_button_label_error{
+    display: flex;
+    justify-content: space-between;
+}
+
+.login_button {
+    float: right;
+    border-radius: 30px;
+    height: 35px;
+    width: 70px;
+    margin-left: auto;
+    background-color: var(--dark_color);
+    color: white;
+}
+
+@media only screen and (min-width: 768px) {
+    .login_form {
+        height: 20rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-basis: auto;
+        width: 50%;
+    }
+    .login_form form{
+        height: 12.5rem;
+    }
+    .login_button,
+    .login_button_unable {
+        margin-top: 1rem;
+    }
+    .login_form input{
+        height: 30px;
+    }
+
+    .form_div_button_label_error{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }    
+
+    .login_button {
+        margin-left: 25%;
+    }
+}

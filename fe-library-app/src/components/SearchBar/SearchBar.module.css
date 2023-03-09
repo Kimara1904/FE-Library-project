@@ -6,10 +6,8 @@
     height: 30px;
 }
 
-.search a {
-    right: 10px;
-    position: fixed;
-    color: var(--dark_color)
+.logout_link{
+    display: none;
 }
 
 @media only screen and (min-width: 768px){
@@ -26,4 +24,12 @@
         height: 35px;
         width: 40%;
    }
+
+   .logout_link {
+        display: flex;
+        right: 10px;
+        top: 15px;
+        position: fixed;
+        color: var(--dark_color)
+    }
 }

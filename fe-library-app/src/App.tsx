@@ -18,7 +18,7 @@ function App() {
       <div className='App'>
         <div className='App-sideBar'>
           <NavigationBar onNavClick={onNavClickHandler} />
-          <SideBar display={true} />
+          <SideBar display={sessionStorage.getItem('token') != null} />
         </div>
         <main className='App-main'>
           <SideBar display={sideBarOn} />

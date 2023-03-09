@@ -1,11 +1,11 @@
 import styles from './HomePage.module.css'
-import BookSearch from '../../BookSearch/BookSearch'
+import SearchBar from '../../SearchBar/SearchBar'
 
 const HomePage = () => {
   return (
     <div className={styles.home}>
       <div className={styles.screen_search}>
-        <BookSearch />
+        <SearchBar />
       </div>
       <div className={styles.home_content}>Home</div>
     </div>
