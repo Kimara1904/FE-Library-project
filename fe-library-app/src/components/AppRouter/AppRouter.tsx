@@ -4,7 +4,6 @@ import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import PrivateRouter from './PrivateRouter'
-import LoggedInRouter from './LoggedInRouter'
 
 const AppRouter = () => {
   return (
@@ -14,9 +13,7 @@ const AppRouter = () => {
       <Route element={<PrivateRouter/>}>
         <Route path='profile' element={<ProfilePage />}/>
       </Route>
-      <Route element={<LoggedInRouter/>}>
-        <Route path='/login' element={<LoginPage />} />
-      </Route>
+      <Route path='/login' element={sessionStorage.getItem('token') == null ? <LoginPage /> : <Navigate to='/home'/>} />
     </Routes>
   )
 }
