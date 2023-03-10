@@ -1,4 +1,4 @@
-import axios, { AxiosPromise } from 'axios'
+import axios from 'axios'
 
 import { baseUrl } from './ServiceConfig'
 
@@ -9,8 +9,8 @@ interface WhereObject{
 }
 
 export interface GetBooksRequest{
-    where: WhereObject[],
-    order: string[],
+    where?: WhereObject[],
+    order?: string[],
     pageNumber: number,
     pageLength: number
 }
@@ -31,8 +31,8 @@ export interface GetBookResponse{
     authors: AuthorBookResponse[]
 }
 
-export const getBooks = (request: GetBooksRequest= { where: [], order: [], pageNumber: 1, pageLength: 25 }): Promise<AxiosPromise<GetBookResponse[]>> => {
-  return axios.get(baseUrl + '/api/Books/paged', {
+export const getBooks = (request: GetBooksRequest) => {
+  return axios.get<GetBookResponse[]>(baseUrl + '/api/Books/paged', {
     params: request
   })
 }

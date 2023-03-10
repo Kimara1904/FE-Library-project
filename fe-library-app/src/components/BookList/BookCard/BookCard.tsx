@@ -1,15 +1,15 @@
 import { GetBookResponse } from '../../../services/BookService'
 import DefaultBookCover from './DefaultBookCover.png'
-import styles from './Book.module.css'
+import styles from './BookCard.module.css'
 
 interface BookProp{
     book: GetBookResponse
 }
 
-const Book = (props: BookProp) => {
+const BookCard = (props: BookProp) => {
   return (
     <div className={styles.book_card}>
-      <img src={props.book.cover !== '' ? props.book.cover : DefaultBookCover} alt='Book cover' />
+      <img src={props.book.cover !== '' ? 'data:image/png;base64,' + props.book.cover : DefaultBookCover} alt='Book cover' />
       <div className={styles.info}>
         <label>Title: </label>
         <div className={styles.data}>{props.book.title}</div>
@@ -32,4 +32,4 @@ const Book = (props: BookProp) => {
   )
 }
 
-export default Book
+export default BookCard

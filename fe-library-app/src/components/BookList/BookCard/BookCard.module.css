@@ -3,6 +3,8 @@
 .book_card{
     background-color: var(--orange_color);
     width: 250px;
+    margin-bottom: 40px;
+    display: grid;
 }
 
 .book_card img{
@@ -42,6 +44,7 @@
     justify-content: space-evenly;
     padding: 12px;
     margin-top: 10px;
+    align-self: flex-end;
 }
 
 .extra_func button{
@@ -49,4 +52,10 @@
     color:white;
     border-radius: 30px;
     height: 30px;
+}
+
+@media only screen and (min-width: 768px) {
+    .book_card{
+        margin-left: 10%;
+    }
 }

@@ -1,5 +1,6 @@
 import { GetBookResponse } from '../../services/BookService'
-import Book from './BookCard/Book'
+import BookCard from './BookCard/BookCard'
+import styles from './BookList.module.css'
 
 interface BookListProps{
     books: GetBookResponse[]
@@ -7,9 +8,9 @@ interface BookListProps{
 
 const BookList = (props: BookListProps) => {
   return (
-    <div>
+    <div className={styles.books}>
       {props.books.map((book) => {
-        return <Book key={book.id} book={book} />
+        return <BookCard key={book.id} book={book} />
       })}
     </div>
   )
