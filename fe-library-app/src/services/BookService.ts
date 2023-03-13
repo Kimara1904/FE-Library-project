@@ -31,8 +31,21 @@ export interface GetBookResponse{
     Authors: AuthorBookResponse[]
 }
 
-export const getBooks = (request: GetBooksRequest) => {
-  return axios.get<GetBookResponse[]>(baseUrl + '/api/Books/paged', {
-    params: request
+const params2Query = (request: GetBooksRequest) => {
+  let result = '?'
+  result += 'PageNumber=' + request.PageNumber.toString()
+  result += '&PageLength=' + request.PageLength.toString()
+  request.Where?.forEach((where) => {
+    if (where.Value !== '' && where.Value != null) {
+      result += `&where=${JSON.stringify(where)}`
+    }
   })
+  request.Order?.forEach((order) => {
+    result += '&Order=' + order
+  })
+  return result
+}
+
+export const getBooks = (request: GetBooksRequest) => {
+  return axios.get<GetBookResponse[]>(baseUrl + '/api/Books/paged' + params2Query(request))
 }

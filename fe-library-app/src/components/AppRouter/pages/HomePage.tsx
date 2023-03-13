@@ -13,7 +13,7 @@ const HomePage = () => {
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ isResponseEmpty, setIsResponseEmpty ] = useState(true)
 
-  const getBooksPage = (request: GetBooksRequest) => {
+  const getBooksPageAppend = (request: GetBooksRequest) => {
     getBooks(request)
       .then((response) => {
         setBookList(prevList => [ ...prevList, ...response.data ])
@@ -22,9 +22,25 @@ const HomePage = () => {
       .catch(() => alert('Something went wrong!'))
   }
 
+  const getBooksPage = (request: GetBooksRequest) => {
+    getBooks(request)
+      .then((response) => {
+        setBookList(response.data)
+        setIsResponseEmpty(response.data.length === 0)
+      })
+      .catch(() => alert('Something went wrong!'))
+  }
+
   useEffect(() => {
-    getBooksPage({ PageNumber: pageNumber, PageLength: 12, Where: [ { Field: 'Title', Value: search, Operation: 2 } ] })
-  }, [ pageNumber, search ])
+    getBooksPageAppend({ PageNumber: pageNumber, PageLength: 12, Where: [ { Field: 'Title', Value: search, Operation: 2 } ] })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ pageNumber ])
+
+  useEffect(() => {
+    setBookList([])
+    getBooksPage({ PageNumber: 1, PageLength: 12, Where: [ { Field: 'Title', Value: search, Operation: 2 } ] })
+    setPageNumber(2)
+  }, [ search ] )
 
   const handleNextPage = () => {
     setPageNumber(prevPage => prevPage + 1)
