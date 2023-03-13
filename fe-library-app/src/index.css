@@ -17,3 +17,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+button {
+  border-style: solid;
+  border-color: var(--dark_color);
+}
+
+input {
+  border-style: solid;
+  border-color: var(--dark_color);
+}

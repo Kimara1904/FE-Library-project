@@ -46,7 +46,7 @@ const LoginPage = () => {
 
     login(enteredEmail, enteredPassword)
       .then((response) => {
-        sessionStorage.setItem('token', response.data.accessToken)
+        sessionStorage.setItem('token', response.data.AccessToken)
         navigation('/home')
       })
       .catch((error: AxiosError) => {

@@ -9,9 +9,14 @@
         background-color: var(--orange_color);
         display: flex;
         min-height: 64px;
-        position: sticky;
         top: 0;
-        justify-content: center;
+        width: 100%;
+        justify-content: flex-start;
         align-items: center;
+        position: fixed;
     }
+}
+.inf_wrap {
+    padding-bottom: 120px;
+    height: calc(100%-85px);
 }

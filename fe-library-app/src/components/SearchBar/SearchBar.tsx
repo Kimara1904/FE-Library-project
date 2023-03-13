@@ -4,7 +4,11 @@ import Filter from '../Filter/Filter'
 import Search from '../Search/Search'
 import style from './SearchBar.module.css'
 
-const SearchBar = () => {
+interface SearchBarProps{
+  searchChange: (newInput: string) => void
+}
+
+const SearchBar = (props: SearchBarProps) => {
   const [ showFilter, setShowFilter ] = useState(false)
 
   const onFilterHandler = () => {
@@ -17,7 +21,7 @@ const SearchBar = () => {
 
   return (
     <div className={style.search}>
-      <Search />
+      <Search searchChange={props.searchChange}/>
       <button onClick={onFilterHandler}>Filter</button>
       <button>^</button>
       <div>
