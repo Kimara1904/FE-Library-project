@@ -3,32 +3,32 @@ import axios from 'axios'
 import { baseUrl } from './ServiceConfig'
 
 interface WhereObject{
-    field: string,
-    value: string,
-    operation: number
+    Field: string,
+    Value: string,
+    Operation: number
 }
 
 export interface GetBooksRequest{
-    where?: WhereObject[],
-    order?: string[],
-    pageNumber: number,
-    pageLength: number
+    Where?: WhereObject[],
+    Order?: string[],
+    PageNumber: number,
+    PageLength: number
 }
 
 interface AuthorBookResponse{
-    id: number,
-    firstName: string,
-    lastName: string
+    Id: number,
+    FirstName: string,
+    LastName: string
 }
 
 export interface GetBookResponse{
-    id: number,
-    title: string,
-    description: string,
-    isbn: string
-    cover: string,
-    publishDate: Date,
-    authors: AuthorBookResponse[]
+    Id: number,
+    Title: string,
+    Description: string,
+    Isbn: string
+    Cover: string,
+    PublishDate: Date,
+    Authors: AuthorBookResponse[]
 }
 
 export const getBooks = (request: GetBooksRequest) => {
