@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import Filter from '../Filter/Filter'
+import Order from '../Order/Order'
 import Search from '../Search/Search'
 import style from './SearchBar.module.css'
 
@@ -10,9 +11,14 @@ interface SearchBarProps{
 
 const SearchBar = (props: SearchBarProps) => {
   const [ showFilter, setShowFilter ] = useState(false)
+  const [ showOrder, setShowOrder ] = useState(false)
 
-  const onFilterHandler = () => {
+  const clickFilterHandler = () => {
     setShowFilter((pervState) => !pervState)
+  }
+
+  const clickOrderHandler = () => {
+    setShowOrder((pervState) => !pervState)
   }
 
   const logoutHandler = () => {
@@ -22,12 +28,13 @@ const SearchBar = (props: SearchBarProps) => {
   return (
     <div className={style.search}>
       <Search searchChange={props.searchChange}/>
-      <button onClick={onFilterHandler}>Filter</button>
-      <button>^</button>
+      <button onClick={clickFilterHandler}>Filter</button>
+      <button onClick={clickOrderHandler}>^</button>
       <div>
         <a className={style.logout_link} href='./login' onClick={logoutHandler}>{sessionStorage.getItem('token') != null ? 'Logout' : 'Login'}</a>
       </div>
       {showFilter && <Filter />}
+      {showOrder && <Order />}
     </div>
   )
 }

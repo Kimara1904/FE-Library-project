@@ -53,7 +53,7 @@ const HomePage = () => {
   return (
     <div className={styles.home}>
       <div className={styles.screen_search}>
-        <SearchBar searchChange={searchChangeHandler}/>
+        <SearchBar searchChange={searchChangeHandler} />
       </div>
       <h1 className={styles.home_content}>Books: </h1>
       <div className={styles.inf_wrap}>
