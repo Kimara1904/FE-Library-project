@@ -60,9 +60,10 @@ const HomePage = () => {
         <InfiniteScroll
           dataLength={bookList.length}
           next={handleNextPage}
-          hasMore={true}
-          loader={<h4>{isResponseEmpty ? 'You saw all books :)' : 'Loading...'}</h4>}
+          hasMore={!isResponseEmpty}
+          loader={<h4>Loading...</h4>}
           className={styles.book}
+          endMessage={<h4>You saw all books :)</h4>}
           scrollThreshold='75%'
         >
           <BookList books={bookList}/>
