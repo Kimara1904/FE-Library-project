@@ -1,0 +1,7 @@
+.books {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 48px;
+    padding-left: 48px;
+}

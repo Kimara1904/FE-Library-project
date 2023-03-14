@@ -1,0 +1,54 @@
+@import '../../../variables.css';
+
+.book_card{
+    background-color: var(--orange_color);
+    width: 250px;
+    display: grid;
+}
+
+.book_card img{
+    width: 250px;
+    height: 202px;
+}
+
+.book_card .info{
+    color: var(--dark_color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.book_card label{
+    margin-left: 5%;
+}
+
+.book_card .authors{
+    margin-right: 5%;
+}
+
+.book_card .data{
+    margin-right: 5%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+    text-align: left;
+}
+
+.book_card .extra_func{
+    height: 50px;
+    background-color: var(--dark_color);
+    color: var(--orange_color);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 12px;
+    margin-top: 10px;
+    align-self: flex-end;
+}
+
+.extra_func button{
+    background-color: var(--orange_color);
+    color:white;
+    border-radius: 30px;
+    height: 30px;
+}
