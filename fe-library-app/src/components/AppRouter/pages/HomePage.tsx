@@ -5,10 +5,10 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import styles from './HomePage.module.css'
 import SearchBar from '../../SearchBar/SearchBar'
 import BookList from '../../BookList/BookList'
-import { GetBookResponse, getBooks, GetBooksRequest } from '../../../services/BookService'
+import { BookItemResponse, getBooks, GetBooksRequest } from '../../../services/BookService'
 
 const HomePage = () => {
-  const [ bookList, setBookList ] = useState<GetBookResponse[]>([])
+  const [ bookList, setBookList ] = useState<BookItemResponse[]>([])
   const [ search, setSearch ] = useState('')
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ isResponseEmpty, setIsResponseEmpty ] = useState(true)
@@ -16,8 +16,8 @@ const HomePage = () => {
   const getBooksPageAppend = (request: GetBooksRequest) => {
     getBooks(request)
       .then((response) => {
-        setBookList(prevList => [ ...prevList, ...response.data ])
-        setIsResponseEmpty(response.data.length === 0)
+        setBookList(prevList => [ ...prevList, ...response.data.Items ])
+        setIsResponseEmpty(request.PageNumber * request.PageLength >= response.data.TotalCount)
       })
       .catch(() => alert('Something went wrong!'))
   }
@@ -25,8 +25,8 @@ const HomePage = () => {
   const getBooksPage = (request: GetBooksRequest) => {
     getBooks(request)
       .then((response) => {
-        setBookList(response.data)
-        setIsResponseEmpty(response.data.length === 0)
+        setBookList(response.data.Items)
+        setIsResponseEmpty(request.PageNumber * request.PageLength >= response.data.TotalCount)
       })
       .catch(() => alert('Something went wrong!'))
   }
