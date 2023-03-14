@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Filters } from '../AppRouter/pages/HomePage'
 import Filter from '../Filter/Filter'
 import Order from '../Order/Order'
 import Search from '../Search/Search'
@@ -7,6 +8,7 @@ import style from './SearchBar.module.css'
 
 interface SearchBarProps{
   searchChange: (newInput: string) => void
+  filterChange: (filterData: Filters) => void
 }
 
 const SearchBar = (props: SearchBarProps) => {
@@ -33,7 +35,7 @@ const SearchBar = (props: SearchBarProps) => {
       <div>
         <a className={style.logout_link} href='./login' onClick={logoutHandler}>{sessionStorage.getItem('token') != null ? 'Logout' : 'Login'}</a>
       </div>
-      {showFilter && <Filter />}
+      {showFilter && <Filter filterChange={props.filterChange}/>}
       {showOrder && <Order />}
     </div>
   )

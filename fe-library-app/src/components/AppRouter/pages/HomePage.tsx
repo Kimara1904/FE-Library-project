@@ -7,9 +7,17 @@ import SearchBar from '../../SearchBar/SearchBar'
 import BookList from '../../BookList/BookList'
 import { GetBookResponse, getBooks, GetBooksRequest } from '../../../services/BookService'
 
+export interface Filters{
+  description: string,
+  isbn: string,
+  authorFirstName: string,
+  authorLastName: string
+}
+
 const HomePage = () => {
   const [ bookList, setBookList ] = useState<GetBookResponse[]>([])
   const [ search, setSearch ] = useState('')
+  const [ filters, setFilters ] = useState<Filters>()
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ isResponseEmpty, setIsResponseEmpty ] = useState(true)
 
@@ -38,9 +46,19 @@ const HomePage = () => {
 
   useEffect(() => {
     setBookList([])
-    getBooksPage({ PageNumber: 1, PageLength: 12, Where: [ { Field: 'Title', Value: search, Operation: 2 } ] })
+    getBooksPage({
+      PageNumber: 1,
+      PageLength: 12,
+      Where: [
+        { Field: 'Title', Value: search, Operation: 2 },
+        { Field: 'Description', Value: filters?.description as string, Operation: 2 },
+        { Field: 'Isbn', Value: filters?.isbn as string, Operation: 2 },
+        { Field: 'Authors.FirstName', Value: filters?.authorFirstName as string, Operation: 2 },
+        { Field: 'Authors.LastName', Value: filters?.authorLastName as string, Operation: 2 }
+      ]
+    })
     setPageNumber(2)
-  }, [ search ] )
+  }, [ search, filters ] )
 
   const handleNextPage = () => {
     setPageNumber(prevPage => prevPage + 1)
@@ -50,10 +68,14 @@ const HomePage = () => {
     setSearch(newInput)
   }
 
+  const filterChangeHandler = (filterData: Filters) => {
+    setFilters(filterData)
+  }
+
   return (
     <div className={styles.home}>
       <div className={styles.screen_search}>
-        <SearchBar searchChange={searchChangeHandler} />
+        <SearchBar searchChange={searchChangeHandler} filterChange={filterChangeHandler}/>
       </div>
       <h1 className={styles.home_content}>Books: </h1>
       <div className={styles.inf_wrap}>
