@@ -1,0 +1,23 @@
+@import '../../variables.css';
+.order_form{
+    background-color: var(--orange_color);
+    padding: 5px 30px;
+    color: var(--dark_color);
+}
+
+.order_row{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.order_radio{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.order_hidden{
+    display: none;
+}

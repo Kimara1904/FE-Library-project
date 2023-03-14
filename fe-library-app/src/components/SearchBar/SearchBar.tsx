@@ -9,6 +9,7 @@ import style from './SearchBar.module.css'
 interface SearchBarProps{
   searchChange: (newInput: string) => void
   filterChange: (filterData: Filters) => void
+  orderChange: (orderData: string[]) => void
 }
 
 const SearchBar = (props: SearchBarProps) => {
@@ -33,6 +34,10 @@ const SearchBar = (props: SearchBarProps) => {
     setShowFilter(false)
   }
 
+  const hideOrder = () => {
+    setShowOrder(false)
+  }
+
   return (
     <div className={style.search}>
       <Search searchChange={props.searchChange}/>
@@ -42,7 +47,7 @@ const SearchBar = (props: SearchBarProps) => {
         <a className={style.logout_link} href='./login' onClick={logoutHandler}>{sessionStorage.getItem('token') != null ? 'Logout' : 'Login'}</a>
       </div>
       <Filter filterChange={props.filterChange} switchShowFilter={showFilter} hideFilter={hideFilter}/>
-      {showOrder && <Order />}
+      <Order orderChange={props.orderChange} switchShowOrder={showOrder} hideOrder={hideOrder}/>
     </div>
   )
 }

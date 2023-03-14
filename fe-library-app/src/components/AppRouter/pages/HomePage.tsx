@@ -18,6 +18,7 @@ const HomePage = () => {
   const [ bookList, setBookList ] = useState<BookItemResponse[]>([])
   const [ search, setSearch ] = useState('')
   const [ filters, setFilters ] = useState<Filters>()
+  const [ orders, setOrders ] = useState<string[]>([])
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ isResponseEmpty, setIsResponseEmpty ] = useState(true)
   const [ isThereBooks, setIsThereBooks ] = useState(false)
@@ -37,18 +38,23 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    getBooksPage({ PageNumber: pageNumber, PageLength: 15, Where: [
-      { Field: 'Title', Value: search, Operation: 2 },
-      { Field: 'Description', Value: filters?.description as string, Operation: 2 },
-      { Field: 'Isbn', Value: filters?.isbn as string, Operation: 2 },
-      { Field: 'Authors.FirstName', Value: filters?.authorFirstName as string, Operation: 2 },
-      { Field: 'Authors.LastName', Value: filters?.authorLastName as string, Operation: 2 }
-    ] })
-  }, [ pageNumber, search, filters ])
+    getBooksPage({
+      PageNumber: pageNumber,
+      PageLength: 15,
+      Order: orders,
+      Where: [
+        { Field: 'Title', Value: search, Operation: 2 },
+        { Field: 'Description', Value: filters?.description as string, Operation: 2 },
+        { Field: 'Isbn', Value: filters?.isbn as string, Operation: 2 },
+        { Field: 'Authors.FirstName', Value: filters?.authorFirstName as string, Operation: 2 },
+        { Field: 'Authors.LastName', Value: filters?.authorLastName as string, Operation: 2 }
+      ]
+    })
+  }, [ pageNumber, search, filters, orders ])
 
   useEffect(() => {
     setPageNumber(1)
-  }, [ search, filters ] )
+  }, [ search, filters, orders ] )
 
   const handleNextPage = () => {
     setPageNumber(prevPage => prevPage + 1)
@@ -62,10 +68,14 @@ const HomePage = () => {
     setFilters(filterData)
   }
 
+  const orderChangeHandler = (orderData: string[]) => {
+    setOrders(orderData)
+  }
+
   return (
     <div className={styles.home}>
       <div className={styles.screen_search}>
-        <SearchBar searchChange={searchChangeHandler} filterChange={filterChangeHandler} />
+        <SearchBar searchChange={searchChangeHandler} filterChange={filterChangeHandler} orderChange={orderChangeHandler} />
       </div>
       <h1 className={styles.home_content}>Books: </h1>
       <div className={styles.inf_wrap}>
