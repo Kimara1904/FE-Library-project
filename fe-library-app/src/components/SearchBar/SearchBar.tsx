@@ -17,14 +17,20 @@ const SearchBar = (props: SearchBarProps) => {
 
   const clickFilterHandler = () => {
     setShowFilter((pervState) => !pervState)
+    setShowOrder(false)
   }
 
   const clickOrderHandler = () => {
     setShowOrder((pervState) => !pervState)
+    setShowFilter(false)
   }
 
   const logoutHandler = () => {
     sessionStorage.removeItem('token')
+  }
+
+  const hideFilter = () => {
+    setShowFilter(false)
   }
 
   return (
@@ -35,7 +41,7 @@ const SearchBar = (props: SearchBarProps) => {
       <div>
         <a className={style.logout_link} href='./login' onClick={logoutHandler}>{sessionStorage.getItem('token') != null ? 'Logout' : 'Login'}</a>
       </div>
-      {showFilter && <Filter filterChange={props.filterChange}/>}
+      <Filter filterChange={props.filterChange} switchShowFilter={showFilter} hideFilter={hideFilter}/>
       {showOrder && <Order />}
     </div>
   )

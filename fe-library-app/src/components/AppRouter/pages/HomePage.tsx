@@ -20,44 +20,34 @@ const HomePage = () => {
   const [ filters, setFilters ] = useState<Filters>()
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ isResponseEmpty, setIsResponseEmpty ] = useState(true)
-
-  const getBooksPageAppend = (request: GetBooksRequest) => {
-    getBooks(request)
-      .then((response) => {
-        setBookList(prevList => [ ...prevList, ...response.data.Items ])
-        setIsResponseEmpty(request.PageNumber * request.PageLength >= response.data.TotalCount)
-      })
-      .catch(() => alert('Something went wrong!'))
-  }
+  const [ isThereBooks, setIsThereBooks ] = useState(false)
 
   const getBooksPage = (request: GetBooksRequest) => {
     getBooks(request)
       .then((response) => {
-        setBookList(response.data.Items)
+        if (request.PageNumber === 1) {
+          setBookList(response.data.Items)
+          setIsThereBooks(response.data.Items.length > 0)
+        }else{
+          setBookList(prevList => [ ...prevList, ...response.data.Items ])
+        }
         setIsResponseEmpty(request.PageNumber * request.PageLength >= response.data.TotalCount)
       })
       .catch(() => alert('Something went wrong!'))
   }
 
   useEffect(() => {
-    getBooksPageAppend({ PageNumber: pageNumber, PageLength: 12, Where: [ { Field: 'Title', Value: search, Operation: 2 } ] })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ pageNumber ])
+    getBooksPage({ PageNumber: pageNumber, PageLength: 15, Where: [
+      { Field: 'Title', Value: search, Operation: 2 },
+      { Field: 'Description', Value: filters?.description as string, Operation: 2 },
+      { Field: 'Isbn', Value: filters?.isbn as string, Operation: 2 },
+      { Field: 'Authors.FirstName', Value: filters?.authorFirstName as string, Operation: 2 },
+      { Field: 'Authors.LastName', Value: filters?.authorLastName as string, Operation: 2 }
+    ] })
+  }, [ pageNumber, search, filters ])
 
   useEffect(() => {
-    setBookList([])
-    getBooksPage({
-      PageNumber: 1,
-      PageLength: 12,
-      Where: [
-        { Field: 'Title', Value: search, Operation: 2 },
-        { Field: 'Description', Value: filters?.description as string, Operation: 2 },
-        { Field: 'Isbn', Value: filters?.isbn as string, Operation: 2 },
-        { Field: 'Authors.FirstName', Value: filters?.authorFirstName as string, Operation: 2 },
-        { Field: 'Authors.LastName', Value: filters?.authorLastName as string, Operation: 2 }
-      ]
-    })
-    setPageNumber(2)
+    setPageNumber(1)
   }, [ search, filters ] )
 
   const handleNextPage = () => {
@@ -75,21 +65,25 @@ const HomePage = () => {
   return (
     <div className={styles.home}>
       <div className={styles.screen_search}>
-        <SearchBar searchChange={searchChangeHandler} filterChange={filterChangeHandler}/>
+        <SearchBar searchChange={searchChangeHandler} filterChange={filterChangeHandler} />
       </div>
       <h1 className={styles.home_content}>Books: </h1>
       <div className={styles.inf_wrap}>
-        <InfiniteScroll
-          dataLength={bookList.length}
-          next={handleNextPage}
-          hasMore={!isResponseEmpty}
-          loader={<h4>Loading...</h4>}
-          className={styles.book}
-          endMessage={<h4>You saw all books :)</h4>}
-          scrollThreshold='75%'
-        >
-          <BookList books={bookList}/>
-        </InfiniteScroll>
+        {isThereBooks ? (
+          <InfiniteScroll
+            dataLength={bookList.length}
+            next={handleNextPage}
+            hasMore={!isResponseEmpty}
+            loader={<h4>Loading...</h4>}
+            className={styles.book}
+            endMessage={<h4>You saw all books :)</h4>}
+            scrollThreshold='75%'
+          >
+            <BookList books={bookList} />
+          </InfiniteScroll>
+        ) : (
+          <h4>There is no books</h4>
+        )}
       </div>
     </div>
   )

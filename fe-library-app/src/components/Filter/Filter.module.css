@@ -11,3 +11,7 @@
     justify-content: space-between;
     margin-bottom: 5px;
 }
+
+.filter_hidden{
+    display:none;
+}

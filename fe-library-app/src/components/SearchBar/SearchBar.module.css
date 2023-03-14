@@ -13,8 +13,8 @@
 @media only screen and (min-width: 768px){
     .search{
         position: absolute;
-        left: 15%;
-        right: 0;
+        left: 10%;
+        right: 15%;
     }
    .search button{
         width: 40px;

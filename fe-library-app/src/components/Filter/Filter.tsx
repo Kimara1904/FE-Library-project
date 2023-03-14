@@ -1,49 +1,85 @@
-import { createRef } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { Filters } from '../AppRouter/pages/HomePage'
 import styles from './Filter.module.css'
 
 interface FilterProps{
-  filterChange: (filterData: Filters) => void
+  filterChange: (filterData: Filters) => void,
+  switchShowFilter: boolean,
+  hideFilter: () => void
 }
 
 const Filter = (props: FilterProps) => {
-  const descRef = createRef<HTMLInputElement>()
-  const isbnRef = createRef<HTMLInputElement>()
-  const authorFirstNameRef = createRef<HTMLInputElement>()
-  const authorLastNameRef = createRef<HTMLInputElement>()
+  const initialState: Filters = {
+    description: '',
+    isbn: '',
+    authorFirstName: '',
+    authorLastName: ''
+  }
+  const [ desc, setDesc ] = useState(initialState.description)
+  const [ isbn, setIsbn ] = useState(initialState.isbn)
+  const [ authorFirstName, setAuthorFirstName ] = useState(initialState.authorFirstName)
+  const [ authorLastName, setAuthorLastName ] = useState(initialState.authorLastName)
 
-  const submitHandler = () => {
-    const filterData: Filters = {
-      description: descRef.current?.value as string,
-      isbn: isbnRef.current?.value as string,
-      authorFirstName: authorFirstNameRef.current?.value as string,
-      authorLastName: authorLastNameRef.current?.value as string
-    }
-    props.filterChange(filterData)
+  const changeDescHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setDesc(event.currentTarget.value)
+  }
+  const changeIsbnHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsbn(event.currentTarget.value)
+  }
+  const changeAuthorFirstNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setAuthorFirstName(event.currentTarget.value)
+  }
+  const changeAuthorLastNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setAuthorLastName(event.currentTarget.value)
+  }
+
+  const filterHandler = () => {
+    props.filterChange({
+      description: desc,
+      isbn,
+      authorFirstName,
+      authorLastName
+    })
+    props.hideFilter()
+  }
+
+  const clearFilter = () => {
+    setDesc('')
+    setIsbn('')
+    setAuthorFirstName('')
+    setAuthorLastName('')
+    props.filterChange({
+      description: '',
+      isbn: '',
+      authorFirstName: '',
+      authorLastName: ''
+    })
+    props.hideFilter()
   }
 
   return (
-    <div className={styles.filter}>
-      <form onSubmit={submitHandler}>
-        <div className={styles.filter_input}>
-          <label>Description: </label>
-          <input type='text' ref={descRef} />
-        </div>
-        <div className={styles.filter_input}>
-          <label>ISBN: </label>
-          <input type='text' ref={isbnRef}/>
-        </div>
-        <div className={styles.filter_input}>
-          <label>Authors first name</label>
-          <input type='text' ref={authorFirstNameRef}/>
-        </div>
-        <div className={styles.filter_input}>
-          <label>Authors last name</label>
-          <input type='text' ref={authorLastNameRef}/>
-        </div>
-        <button>Filter</button>
-      </form>
+    <div className={props.switchShowFilter ? styles.filter : styles.filter_hidden}>
+      <div className={styles.filter_input}>
+        <label>Description: </label>
+        <input type='text' value={desc} onChange={changeDescHandler} />
+      </div>
+      <div className={styles.filter_input}>
+        <label>ISBN: </label>
+        <input type='text' value={isbn} onChange={changeIsbnHandler} />
+      </div>
+      <div className={styles.filter_input}>
+        <label>Authors first name</label>
+        <input type='text' value={authorFirstName} onChange={changeAuthorFirstNameHandler} />
+      </div>
+      <div className={styles.filter_input}>
+        <label>Authors last name</label>
+        <input type='text' value={authorLastName} onChange={changeAuthorLastNameHandler} />
+      </div>
+      <button onClick={filterHandler}>
+        Filter
+      </button>
+      <button onClick={clearFilter}>Clear</button>
     </div>
   )
 }
