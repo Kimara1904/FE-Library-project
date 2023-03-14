@@ -1,11 +1,7 @@
 .books {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-} 
-
-@media only screen and (min-width: 768px) {
-    .books {
-        justify-content: flex-start;
-    }
+    justify-content: flex-start;
+    gap: 48px;
+    padding-left: 48px;
 }

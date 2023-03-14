@@ -21,7 +21,7 @@ interface AuthorBookResponse{
     LastName: string
 }
 
-export interface GetBookResponse{
+export interface BookItemResponse{
     Id: number,
     Title: string,
     Description: string,
@@ -29,6 +29,11 @@ export interface GetBookResponse{
     Cover: string,
     PublishDate: Date,
     Authors: AuthorBookResponse[]
+}
+
+export interface GetBookResponse{
+  Items: BookItemResponse[],
+  TotalCount: number
 }
 
 const params2Query = (request: GetBooksRequest) => {
@@ -47,5 +52,5 @@ const params2Query = (request: GetBooksRequest) => {
 }
 
 export const getBooks = (request: GetBooksRequest) => {
-  return axios.get<GetBookResponse[]>(baseUrl + '/api/Books/paged' + params2Query(request))
+  return axios.get<GetBookResponse>(baseUrl + '/api/Books/paged' + params2Query(request))
 }

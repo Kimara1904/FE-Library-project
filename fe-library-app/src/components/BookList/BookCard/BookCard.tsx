@@ -1,9 +1,9 @@
-import { GetBookResponse } from '../../../services/BookService'
+import { BookItemResponse } from '../../../services/BookService'
 import DefaultBookCover from './DefaultBookCover.png'
 import styles from './BookCard.module.css'
 
 interface BookProp{
-    book: GetBookResponse
+    book: BookItemResponse
 }
 
 const BookCard = (props: BookProp) => {
