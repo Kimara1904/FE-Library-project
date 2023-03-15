@@ -21,3 +21,20 @@
 .order_hidden{
     display: none;
 }
+
+@media only screen and (min-width:768px) {
+    .order_form{
+        position: absolute;
+        top: 48px;
+        width:30%;
+        right: 0;
+    }
+    .order_row{
+        justify-content: space-between;
+        margin-bottom: 5px;
+        align-items: center;
+    }
+    .order_radio{
+        flex-direction: row;
+    }
+}

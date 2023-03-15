@@ -13,11 +13,11 @@
 @media only screen and (min-width: 768px){
     .search{
         position: absolute;
-        left: 10%;
+        left: 0;
         right: 15%;
     }
    .search button{
-        width: 40px;
+        width: 70px;
         height: 35px;
    }
    .search input{
