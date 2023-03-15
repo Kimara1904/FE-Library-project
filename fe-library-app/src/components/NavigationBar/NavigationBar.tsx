@@ -11,7 +11,7 @@ const NavigationBar = (props: NavigationBarProps) => {
 
   const loggedIn = sessionStorage.getItem('token') != null
 
-  const loginClickHandler = () => {
+  const handleLoginClick= () => {
     nav('/login')
   }
   return (
@@ -31,7 +31,7 @@ const NavigationBar = (props: NavigationBarProps) => {
           </li>
         )}
         {!loggedIn && (
-          <button className={styles.login_button} onClick={loginClickHandler}>
+          <button className={styles.login_button} onClick={handleLoginClick}>
             Login
           </button>
         )}
