@@ -10,31 +10,25 @@ interface FilterProps{
 }
 
 const Filter = (props: FilterProps) => {
-  const initialState: Filters = {
-    description: '',
-    isbn: '',
-    authorFirstName: '',
-    authorLastName: ''
-  }
-  const [ desc, setDesc ] = useState(initialState.description)
-  const [ isbn, setIsbn ] = useState(initialState.isbn)
-  const [ authorFirstName, setAuthorFirstName ] = useState(initialState.authorFirstName)
-  const [ authorLastName, setAuthorLastName ] = useState(initialState.authorLastName)
+  const [ desc, setDesc ] = useState('')
+  const [ isbn, setIsbn ] = useState('')
+  const [ authorFirstName, setAuthorFirstName ] = useState('')
+  const [ authorLastName, setAuthorLastName ] = useState('')
 
-  const changeDescHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeDesc = (event: ChangeEvent<HTMLInputElement>) => {
     setDesc(event.currentTarget.value)
   }
-  const changeIsbnHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeIsbn = (event: ChangeEvent<HTMLInputElement>) => {
     setIsbn(event.currentTarget.value)
   }
-  const changeAuthorFirstNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeAuthorFirstName = (event: ChangeEvent<HTMLInputElement>) => {
     setAuthorFirstName(event.currentTarget.value)
   }
-  const changeAuthorLastNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeAuthorLastName = (event: ChangeEvent<HTMLInputElement>) => {
     setAuthorLastName(event.currentTarget.value)
   }
 
-  const filterHandler = () => {
+  const handleFilterClick = () => {
     props.filterChange({
       description: desc,
       isbn,
@@ -44,7 +38,7 @@ const Filter = (props: FilterProps) => {
     props.hideFilter()
   }
 
-  const clearFilter = () => {
+  const handleFilterClear = () => {
     setDesc('')
     setIsbn('')
     setAuthorFirstName('')
@@ -62,24 +56,24 @@ const Filter = (props: FilterProps) => {
     <div className={props.switchShowFilter ? styles.filter : styles.filter_hidden}>
       <div className={styles.filter_input}>
         <label>Description: </label>
-        <input type='text' value={desc} onChange={changeDescHandler} />
+        <input type='text' value={desc} onChange={handleChangeDesc} />
       </div>
       <div className={styles.filter_input}>
         <label>ISBN: </label>
-        <input type='text' value={isbn} onChange={changeIsbnHandler} />
+        <input type='text' value={isbn} onChange={handleChangeIsbn} />
       </div>
       <div className={styles.filter_input}>
         <label>Authors first name</label>
-        <input type='text' value={authorFirstName} onChange={changeAuthorFirstNameHandler} />
+        <input type='text' value={authorFirstName} onChange={handleChangeAuthorFirstName} />
       </div>
       <div className={styles.filter_input}>
         <label>Authors last name</label>
-        <input type='text' value={authorLastName} onChange={changeAuthorLastNameHandler} />
+        <input type='text' value={authorLastName} onChange={handleChangeAuthorLastName} />
       </div>
-      <button onClick={filterHandler}>
+      <button onClick={handleFilterClick}>
         Filter
       </button>
-      <button onClick={clearFilter}>Clear</button>
+      <button onClick={handleFilterClear}>Clear</button>
     </div>
   )
 }

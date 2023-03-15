@@ -16,38 +16,38 @@ const SearchBar = (props: SearchBarProps) => {
   const [ showFilter, setShowFilter ] = useState(false)
   const [ showOrder, setShowOrder ] = useState(false)
 
-  const clickFilterHandler = () => {
+  const handleClickFilter = () => {
     setShowFilter((pervState) => !pervState)
     setShowOrder(false)
   }
 
-  const clickOrderHandler = () => {
+  const handleClickOrder = () => {
     setShowOrder((pervState) => !pervState)
     setShowFilter(false)
   }
 
-  const logoutHandler = () => {
+  const handleLogout = () => {
     sessionStorage.removeItem('token')
   }
 
-  const hideFilter = () => {
+  const handleFilterHide = () => {
     setShowFilter(false)
   }
 
-  const hideOrder = () => {
+  const handleOrderHide = () => {
     setShowOrder(false)
   }
 
   return (
     <div className={style.search}>
       <Search searchChange={props.searchChange}/>
-      <button onClick={clickFilterHandler}>Filter</button>
-      <button onClick={clickOrderHandler}>^</button>
+      <button onClick={handleClickFilter}>Filter</button>
+      <button onClick={handleClickOrder}>^</button>
       <div>
-        <a className={style.logout_link} href='./login' onClick={logoutHandler}>{sessionStorage.getItem('token') != null ? 'Logout' : 'Login'}</a>
+        <a className={style.logout_link} href='./login' onClick={handleLogout}>{sessionStorage.getItem('token') != null ? 'Logout' : 'Login'}</a>
       </div>
-      <Filter filterChange={props.filterChange} switchShowFilter={showFilter} hideFilter={hideFilter}/>
-      <Order orderChange={props.orderChange} switchShowOrder={showOrder} hideOrder={hideOrder}/>
+      <Filter filterChange={props.filterChange} switchShowFilter={showFilter} hideFilter={handleFilterHide}/>
+      <Order orderChange={props.orderChange} switchShowOrder={showOrder} hideOrder={handleOrderHide}/>
     </div>
   )
 }

@@ -21,14 +21,12 @@ const HomePage = () => {
   const [ orders, setOrders ] = useState<string[]>([])
   const [ pageNumber, setPageNumber ] = useState(1)
   const [ isResponseEmpty, setIsResponseEmpty ] = useState(true)
-  const [ isThereBooks, setIsThereBooks ] = useState(false)
 
   const getBooksPage = (request: GetBooksRequest) => {
     getBooks(request)
       .then((response) => {
         if (request.PageNumber === 1) {
           setBookList(response.data.Items)
-          setIsThereBooks(response.data.Items.length > 0)
         }else{
           setBookList(prevList => [ ...prevList, ...response.data.Items ])
         }
@@ -60,26 +58,26 @@ const HomePage = () => {
     setPageNumber(prevPage => prevPage + 1)
   }
 
-  const searchChangeHandler = (newInput: string): void => {
+  const handleSearchChange = (newInput: string): void => {
     setSearch(newInput)
   }
 
-  const filterChangeHandler = (filterData: Filters) => {
+  const handleFilterChange = (filterData: Filters) => {
     setFilters(filterData)
   }
 
-  const orderChangeHandler = (orderData: string[]) => {
+  const handleOrderChange = (orderData: string[]) => {
     setOrders(orderData)
   }
 
   return (
     <div className={styles.home}>
       <div className={styles.screen_search}>
-        <SearchBar searchChange={searchChangeHandler} filterChange={filterChangeHandler} orderChange={orderChangeHandler} />
+        <SearchBar searchChange={handleSearchChange} filterChange={handleFilterChange} orderChange={handleOrderChange} />
       </div>
       <h1 className={styles.home_content}>Books: </h1>
       <div className={styles.inf_wrap}>
-        {isThereBooks ? (
+        {bookList.length > 0 ? (
           <InfiniteScroll
             dataLength={bookList.length}
             next={handleNextPage}
