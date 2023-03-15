@@ -1,0 +1,26 @@
+@import '../../variables.css';
+
+.filter{
+    background-color: var(--orange_color);
+    padding: 5px 20px;
+    color: var(--dark_color);
+}
+
+.filter_input{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.filter_hidden{
+    display:none;
+}
+
+@media only screen and (min-width:768px) {
+    .filter{
+        position: absolute;
+        top: 48px;
+        width:40%;
+        right: 0;
+    }
+}

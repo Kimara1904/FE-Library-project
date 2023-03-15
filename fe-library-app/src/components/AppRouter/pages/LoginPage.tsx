@@ -28,7 +28,7 @@ const LoginPage = () => {
     }
   }
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const enteredEmail = emailRef.current?.value as string
@@ -58,7 +58,7 @@ const LoginPage = () => {
 
   return (
     <div className={styles.login_form}>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label className={styles.login_label_desc}>Email</label>
           <input className={emailError ? styles.login_input_invalid : ''} type='text' name='email' ref={emailRef} onBlur={handleBlurEmail} onFocus={() => setEmailError(false)}/>
