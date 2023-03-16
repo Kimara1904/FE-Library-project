@@ -13,7 +13,10 @@ const AppRouter = () => {
       <Route path='/home' element={<HomePage />} />
       <Route element={<PrivateRouter/>}>
         <Route path='/profile' element={<ProfilePage />}/>
-        <Route path='/add_modify' element={<AddModifyPage />}/>
+        <Route path='/add_modify' >
+          <Route index element={<AddModifyPage />} />
+          <Route path=':id' element={<AddModifyPage />} />
+        </Route>
       </Route>
       <Route path='/login' element={sessionStorage.getItem('token') == null ? <LoginPage /> : <Navigate to='/home'/>} />
     </Routes>

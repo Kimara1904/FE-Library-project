@@ -21,14 +21,32 @@ interface AuthorBookResponse{
     LastName: string
 }
 
+interface AuthorBookByIdResponse{
+  Id: number,
+  Firstname: string,
+  Lastname: string
+}
+
 export interface BookItemResponse{
     Id: number,
     Title: string,
     Description: string,
-    Isbn: string
+    Isbn: string,
+    Quantity: number
     Cover: string,
     PublishDate: Date,
     Authors: AuthorBookResponse[]
+}
+
+export interface BookByIdItemResponse{
+  Id: number,
+  Title: string,
+  Description: string,
+  ISBN: string,
+  Quantity: number
+  Cover: string,
+  PublishDate: Date,
+  Authors: AuthorBookByIdResponse[]
 }
 
 export interface GetBookResponse{
@@ -57,4 +75,12 @@ export const getBooks = (request: GetBooksRequest) => {
 
 export const createBook = (request: FormData) => {
   return axios.post<string>(baseUrl + '/api/Books', request)
+}
+
+export const getBookById = (id: string) => {
+  return axios.get<BookByIdItemResponse>(baseUrl + '/api/Books/' + id)
+}
+
+export const modifyBook = (request: FormData) => {
+  return axios.put<string>(baseUrl + '/api/Books', request)
 }

@@ -1,13 +1,20 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
 import Select, { MultiValue } from 'react-select'
 
+import AddAuthorModal from '../../modals/AddAuthorModal'
 import { GetAuthorResponse, getAuthors } from '../../services/AuthorService'
-import { createBook } from '../../services/BookService'
+import { createBook, getBookById, modifyBook } from '../../services/BookService'
 import DefaultBookCover from '../BookList/BookCard/DefaultBookCover.png'
 import styles from './AddModifyBookForm.module.css'
 
-const AddModifyForm = () => {
+interface AddModifyBookFormProps {
+  onFinish: () => void,
+  onHide?: () => void,
+  id?: string
+}
+
+const AddModifyBookForm = (props: AddModifyBookFormProps) => {
   const [ authorList, setAuthorList ] = useState<GetAuthorResponse[]>([])
   const [ selectedAuthors, setSelectedAuthors ] = useState<GetAuthorResponse[]>([])
   const [ newBookTitle, setNewBookTitle ] = useState('')
@@ -24,14 +31,38 @@ const AddModifyForm = () => {
     isbnErrorFormat: false,
     quantityError: false
   })
+  const [ showAddAuthor, setShowAddAuthor ] = useState(false)
 
-  useEffect(() => {
+  const getAuthorList = useCallback(() => {
+    if(props.id != null)
+    {
+      getBookById(props.id)
+        .then((response) => {
+          setNewBookTitle(response.data.Title)
+          setNewBookDisc(response.data.Description)
+          setNewBookIsbn(response.data.ISBN)
+          setNewBookQuantity(response.data.Quantity)
+          setNewBookPublishDate(new Intl.DateTimeFormat('en-CA').format(new Date(response.data.PublishDate)))
+          setSelectedAuthors(response.data.Authors.map((author) => {
+            return {
+              Id: author.Id,
+              FirstName: author.Firstname,
+              LastName: author.Lastname
+            }
+          }))
+          setNewBookCoverShow('data:image/png;base64,' + response.data.Cover)
+        }).catch(() => alert('Something went wrong'))
+    }
     getAuthors()
       .then((response) => {
         setAuthorList(response.data)
       })
       .catch(() => alert('Error with getting authors'))
-  }, [])
+  }, [ props.id ])
+
+  useEffect(() => {
+    getAuthorList()
+  }, [ getAuthorList ])
 
   const handleSelectChange = (selection: MultiValue<GetAuthorResponse>) => {
     setSelectedAuthors(selection as GetAuthorResponse[])
@@ -108,12 +139,28 @@ const AddModifyForm = () => {
     formData.append('Description', newBookDisc)
     formData.append('Isbn', newBookIsbn)
     formData.append('Quantity', newBookQuantity.toString())
-    formData.append('Cover', newBookCover)
     formData.append('PublishDate', newBookPublishDate)
     selectedAuthors.forEach((author) => formData.append('AuthorIds', author.Id.toString()))
-    createBook(formData)
-      .then(() => console.log('redirect*'))
-      .catch(() => alert('Something went wrong with adding!'))
+    if (props.id) {
+      formData.append('Id', props.id)
+      /*Here image handle */
+      modifyBook(formData)
+        .then(() => props.onFinish())
+        .catch(() => alert('Something went wrong with modifying!'))
+    }else{
+      formData.append('Cover', newBookCover)
+      createBook(formData)
+        .then(() => props.onFinish())
+        .catch(() => alert('Something went wrong with adding!'))
+    }
+  }
+
+  const handleShowAddAuthor = () => {
+    setShowAddAuthor(true)
+  }
+
+  const handleHideAddAuthor = () => {
+    setShowAddAuthor(false)
   }
 
   return (
@@ -203,17 +250,18 @@ const AddModifyForm = () => {
             value={selectedAuthors}
             onChange={handleSelectChange}
             isSearchable={true}
-            maxMenuHeight={150}
+            maxMenuHeight={130}
             isMulti={true}
           />
-          <button className={styles.add_author_button}>+</button>
+          <button className={styles.add_author_button} onClick={handleShowAddAuthor}>+</button>
+          {showAddAuthor && <AddAuthorModal onFinish={getAuthorList} onHide={handleHideAddAuthor} />}
         </div>
       </div>
       <div>
-        <button onClick={handleClick}>Create</button>
+        <button onClick={handleClick}>{props.id ? 'Modify' : 'Create'}</button>
       </div>
     </div>
   )
 }
 
-export default AddModifyForm
+export default AddModifyBookForm

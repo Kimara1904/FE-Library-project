@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 import { BookItemResponse } from '../../../services/BookService'
 import DefaultBookCover from './DefaultBookCover.png'
 import styles from './BookCard.module.css'
@@ -7,6 +9,12 @@ interface BookProp{
 }
 
 const BookCard = (props: BookProp) => {
+  const navigator = useNavigate()
+
+  const handleModifyClick = () => {
+    navigator('/add_modify/' + props.book.Id.toString())
+  }
+
   return (
     <div className={styles.book_card}>
       <img src={props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover} alt='Book cover' />
@@ -25,7 +33,7 @@ const BookCard = (props: BookProp) => {
         </div>
       </div>
       <div className={styles.extra_func}>
-        <button>Modify</button>
+        <button onClick={handleModifyClick}>Modify</button>
         <button>Delete</button>
       </div>
     </div>
