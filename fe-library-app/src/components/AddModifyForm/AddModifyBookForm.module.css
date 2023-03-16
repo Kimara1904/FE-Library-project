@@ -1,0 +1,70 @@
+@import '../../variables.css';
+.add_modify_book_form{
+    display: flex;
+    flex-direction: column;
+}
+
+.add_modify_book_form input,
+.add_modify_book_form textarea{
+    border-radius: 10px;
+}
+
+.add_modify_book_form img{
+    width: 250px;
+    height: 200px;
+}
+
+.add_modify_book_inputs,
+.add_modify_book_cover{
+    margin-bottom: 25px;
+}
+
+.add_modify_book_inputs_val{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.add_modify_book_error_label{
+    font-size: 15px;
+    height: 15px;
+    align-self: flex-end;
+    margin-right: 17%;
+    margin-bottom: 5px;
+    color: red;
+    font-weight: bold;
+}
+
+.add_modify_book_cover{
+    margin-top: 25px;
+}
+
+.add_modify_book_inputs,
+.add_modify_book_form_validation{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 17%;
+    margin-right: 17%;
+}
+
+.add_modify_book_form button{
+    background-color: var(--dark_color);
+    color: white;
+    border-radius: 30px;
+    height: 30px;
+    width: 70px;
+}
+
+.add_modify_book_error_inputs{
+    border: solid red;
+}
+
+.add_author_button{
+    width: 30px !important;
+}
+
+.add_modify_select{
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}

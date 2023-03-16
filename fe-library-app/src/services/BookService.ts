@@ -54,3 +54,7 @@ const params2Query = (request: GetBooksRequest) => {
 export const getBooks = (request: GetBooksRequest) => {
   return axios.get<GetBookResponse>(baseUrl + '/api/Books/paged' + params2Query(request))
 }
+
+export const createBook = (request: FormData) => {
+  return axios.post<string>(baseUrl + '/api/Books', request)
+}

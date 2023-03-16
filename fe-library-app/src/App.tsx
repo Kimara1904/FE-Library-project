@@ -6,6 +6,7 @@ import './App.css'
 import AppRouter from './components/AppRouter/AppRouter'
 import NavigationBar from './components/NavigationBar/NavigationBar'
 import SideBar from './components/SideBar/SideBar'
+import { configureAxiosRequestInterceptors } from './services/ServiceConfig'
 
 function App() {
   const [ sideBarOn, setSideBarOn ] = useState(false)
@@ -13,6 +14,9 @@ function App() {
   const onNavClickHandler = () => {
     setSideBarOn((pervState) => !pervState)
   }
+
+  configureAxiosRequestInterceptors()
+
   return (
     <BrowserRouter>
       <div className='App'>

@@ -1,5 +1,11 @@
+import AddModifyForm from '../../AddModifyForm/AddModifyBookForm'
+
 const AddModifyPage = () => {
-  return <div>form for adding and modifying</div>
+  return (
+    <div>
+      <AddModifyForm />
+    </div>
+  )
 }
 
 export default AddModifyPage
