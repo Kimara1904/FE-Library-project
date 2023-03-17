@@ -11,7 +11,7 @@ const BookList = (props: BookListProps) => {
   return (
     <div className={styles.books}>
       {props.books.map((book) => {
-        return <BookCard key={book.Id} book={book} afterDelete={props.onChange}/>
+        return <BookCard key={book.Id} book={book} onClick={props.onChange}/>
       })}
     </div>
   )

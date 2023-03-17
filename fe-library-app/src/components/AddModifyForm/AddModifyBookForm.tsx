@@ -159,7 +159,11 @@ const AddModifyBookForm = (props: AddModifyBookFormProps) => {
       formData.append('Id', props.id)
       formData.append('Cover', base64ToBlob(newBookCoverShow))
       modifyBook(formData)
-        .then(() => props.onFinish())
+        .then(() => {
+          if(props.onHide)
+            props.onHide()
+          props.onFinish()
+        })
         .catch(() => alert('Something went wrong with modifying!'))
     }else{
       formData.append('Cover', newBookCover)

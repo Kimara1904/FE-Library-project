@@ -48,6 +48,7 @@ const LoginPage = () => {
       .then((response) => {
         sessionStorage.setItem('token', response.data.AccessToken)
         navigation('/home')
+        window.location.reload()
       })
       .catch((error: AxiosError) => {
         if (axios.isAxiosError(error)) {

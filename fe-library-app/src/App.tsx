@@ -28,10 +28,10 @@ function App() {
       <div className='App'>
         <div className='App-sideBar'>
           <NavigationBar onNavClick={onNavClickHandler} />
-          <SideBar display={sessionStorage.getItem('token') != null} afterChoosing={() => setAddModifyBookModalOn(true)}/>
+          <SideBar display={sessionStorage.getItem('token') != null} afterChoosingHandle={() => setAddModifyBookModalOn(true)}/>
         </div>
         <main className='App-main'>
-          <SideBar display={sideBarOn} afterChoosing={() => setSideBarOn(false)}/>
+          <SideBar display={sideBarOn} afterChoosingHandle={() => setSideBarOn(false)}/>
           <AppRouter />
           {addModifyBookModalOn && <AddModifyBookModal onHide={() => setAddModifyBookModalOn(false)} onFinish={handleModalFinish}/>}
         </main>

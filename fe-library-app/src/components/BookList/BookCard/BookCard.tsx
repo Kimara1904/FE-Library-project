@@ -1,16 +1,20 @@
+import { useState } from 'react'
+
 import { useNavigate } from 'react-router-dom'
 
 import { BookItemResponse, deleteBook } from '../../../services/BookService'
 import DefaultBookCover from './DefaultBookCover.png'
 import styles from './BookCard.module.css'
+import AddModifyBookModal from '../../../modals/AddModifyBookModal'
 
 interface BookProp{
     book: BookItemResponse
-    afterDelete: () => void
+    onClick: () => void,
 }
 
 const BookCard = (props: BookProp) => {
   const navigator = useNavigate()
+  const [ showModifyModule, setShowModifyModule ] = useState(false)
 
   const handleModifyClick = () => {
     navigator('/add_modify/' + props.book.Id.toString())
@@ -21,7 +25,7 @@ const BookCard = (props: BookProp) => {
       deleteBook(props.book.Id.toString())
         .then(() => {
           alert('You successfully delete book ' + props.book.Title)
-          props.afterDelete()
+          props.onClick()
         })
         .catch(() => {
           alert('Something went wrong with deleting book')
@@ -47,9 +51,11 @@ const BookCard = (props: BookProp) => {
         </div>
       </div>
       <div className={styles.extra_func}>
-        <button onClick={handleModifyClick}>Modify</button>
+        <button className={styles.book_phone_button} onClick={handleModifyClick}>Modify</button>
+        <button className={styles.book_desktop_button} onClick={() => setShowModifyModule(true)}>Modify</button>
         <button onClick={handleDeleteClick}>Delete</button>
       </div>
+      {showModifyModule && <AddModifyBookModal onFinish={props.onClick} id={props.book.Id.toString()} onHide={() => setShowModifyModule(false)}/>}
     </div>
   )
 }
