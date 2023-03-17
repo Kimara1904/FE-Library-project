@@ -128,6 +128,19 @@ const AddModifyBookForm = (props: AddModifyBookFormProps) => {
     }
   }
 
+  const base64ToBlob = (base64Image: string): Blob => {
+    const parts = base64Image.split(';base64,')
+    const imageType = parts[0].split(':')[1]
+    const decodedData = window.atob(parts[1])
+    const uIntArray = new Uint8Array(decodedData.length)
+
+    for (let i = 0; i < decodedData.length; ++i) {
+      uIntArray[i] = decodedData.charCodeAt(i)
+    }
+
+    return new Blob([ uIntArray ], { type: imageType })
+  }
+
   const handleClick = () => {
     if (inputError.titleError || inputError.isbnErrorEmpty || inputError.isbnErrorFormat || inputError.quantityError)
     {
@@ -143,7 +156,7 @@ const AddModifyBookForm = (props: AddModifyBookFormProps) => {
     selectedAuthors.forEach((author) => formData.append('AuthorIds', author.Id.toString()))
     if (props.id) {
       formData.append('Id', props.id)
-      /*Here image handle */
+      formData.append('Cover', base64ToBlob(newBookCoverShow))
       modifyBook(formData)
         .then(() => props.onFinish())
         .catch(() => alert('Something went wrong with modifying!'))
