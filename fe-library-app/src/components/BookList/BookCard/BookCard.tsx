@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 
-import { BookItemResponse } from '../../../services/BookService'
+import { BookItemResponse, deleteBook } from '../../../services/BookService'
 import DefaultBookCover from './DefaultBookCover.png'
 import styles from './BookCard.module.css'
 
 interface BookProp{
     book: BookItemResponse
+    afterDelete: () => void
 }
 
 const BookCard = (props: BookProp) => {
@@ -13,6 +14,19 @@ const BookCard = (props: BookProp) => {
 
   const handleModifyClick = () => {
     navigator('/add_modify/' + props.book.Id.toString())
+  }
+
+  const handleDeleteClick = () => {
+    if (confirm('Are you sure that you want to delete this book?') === true) {
+      deleteBook(props.book.Id.toString())
+        .then(() => {
+          alert('You successfully delete book ' + props.book.Title)
+          props.afterDelete()
+        })
+        .catch(() => {
+          alert('Something went wrong with deleting book')
+        })
+    }
   }
 
   return (
@@ -34,7 +48,7 @@ const BookCard = (props: BookProp) => {
       </div>
       <div className={styles.extra_func}>
         <button onClick={handleModifyClick}>Modify</button>
-        <button>Delete</button>
+        <button onClick={handleDeleteClick}>Delete</button>
       </div>
     </div>
   )

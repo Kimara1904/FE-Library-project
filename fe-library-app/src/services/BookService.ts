@@ -84,3 +84,7 @@ export const getBookById = (id: string) => {
 export const modifyBook = (request: FormData) => {
   return axios.put<string>(baseUrl + '/api/Books', request)
 }
+
+export const deleteBook = (id: string) => {
+  return axios.delete<string>(baseUrl + '/api/Books/' + id)
+}
