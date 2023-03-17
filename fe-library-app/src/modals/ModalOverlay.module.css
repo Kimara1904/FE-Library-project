@@ -1,3 +1,4 @@
+@import '../variables.css';
 .modal {
     position: fixed;
     top: 30vh;
@@ -6,4 +7,16 @@
     z-index: 100;
     overflow: hidden;
     border-radius: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+    .modal{
+        top: 10vh;
+        bottom: 10vh;
+        left: calc(var(--sidebar_width) + 7.5%);
+        width:70%;
+        background-color: var(--orange_color);
+        height: 80%;
+        overflow-y: auto;
+    }
 }

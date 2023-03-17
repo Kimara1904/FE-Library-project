@@ -68,3 +68,81 @@
     gap: 3px;
     align-items: center;
 }
+
+.add_author_form{
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .add_modify_book_form{
+        align-items: start;
+        padding-bottom: 10px;
+        width: 100%;
+        height: 90vh;
+        padding-left: 20px;
+    }
+
+    .add_modify_book_form input{
+        height: 25px;
+        width: 50%;
+    }
+
+    .add_modify_book_form textarea,
+    .add_modify_select{
+        width: 50%;
+    }
+
+    .add_modify_select{
+        display: block;
+    }
+
+    .add_modify_book_cover{
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        flex-wrap: wrap;
+    }
+
+
+    .add_modify_book_cover,
+    .add_modify_book_inputs,
+    .add_modify_book_inputs_val{
+        width: 40%;
+    }
+    
+    .add_author_button{
+        display: none;
+    }
+
+    .add_author_form{
+        display: flex;
+        position: absolute;
+        top: 5%;
+        right: 10%;
+    }
+
+    .add_modify_book_inputs_val{
+        align-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .add_modify_book_form_validation{
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .add_modify_book_inputs{
+        margin-left: 0;
+    }
+
+    .add_modify_book_form img{
+        margin-bottom: 20px;
+    }
+
+    .add_modify_book_button{
+        width: 40%;
+        display: flex;
+        justify-content: center;
+    }
+}

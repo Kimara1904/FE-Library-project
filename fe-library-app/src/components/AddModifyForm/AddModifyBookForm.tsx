@@ -5,6 +5,7 @@ import Select, { MultiValue } from 'react-select'
 import AddAuthorModal from '../../modals/AddAuthorModal'
 import { GetAuthorResponse, getAuthors } from '../../services/AuthorService'
 import { createBook, getBookById, modifyBook } from '../../services/BookService'
+import AddAuthor from '../AddAuthor/AddAuthor'
 import DefaultBookCover from '../BookList/BookCard/DefaultBookCover.png'
 import styles from './AddModifyBookForm.module.css'
 
@@ -246,7 +247,7 @@ const AddModifyBookForm = (props: AddModifyBookFormProps) => {
           />
         </div>
         <label className={styles.add_modify_book_error_label}>
-          {inputError.quantityError ? 'Quantity must be greater than 0' : ''}
+          {inputError.quantityError ? 'Quantity must be > 0' : ''}
         </label>
       </div>
       <div className={styles.add_modify_book_inputs}>
@@ -270,8 +271,11 @@ const AddModifyBookForm = (props: AddModifyBookFormProps) => {
           {showAddAuthor && <AddAuthorModal onFinish={getAuthorList} onHide={handleHideAddAuthor} />}
         </div>
       </div>
-      <div>
+      <div className={styles.add_modify_book_button}>
         <button onClick={handleClick}>{props.id ? 'Modify' : 'Create'}</button>
+      </div>
+      <div className={styles.add_author_form}>
+        <AddAuthor onFinish={() => getAuthorList()}/>
       </div>
     </div>
   )

@@ -46,3 +46,20 @@
 .add_author_error_transparent{
     color: transparent
 }
+
+.add_author_title{
+    margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 768px){
+    .add_author form{
+        background-color: var(--dark_color);
+        border-radius: 15px;
+        margin-bottom: 10px;
+        color:white;
+    }
+
+    .add_author button{
+        background-color: var(--orange_color) !important;
+    }
+}
