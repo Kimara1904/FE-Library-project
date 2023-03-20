@@ -102,23 +102,23 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
   }
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewBookProps((bookProps) => {return{ ... bookProps, title: event.currentTarget.value }})
+    setNewBookProps((bookProps) => {return{ ...bookProps, title: event.target.value }})
   }
 
-  const handleDescChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setNewBookProps((bookProps) => {return{ ... bookProps, description: event.currentTarget.value }})
+  const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewBookProps((bookProps) => {return{ ... bookProps, description: event.target.value }})
   }
 
   const handleIsbnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewBookProps((bookProps) => {return{ ... bookProps, isbn: event.currentTarget.value }})
+    setNewBookProps((bookProps) => {return{ ... bookProps, isbn: event.target.value }})
   }
 
   const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewBookProps((bookProps) => {return{ ... bookProps, quantity: event.currentTarget.value !== '' ? parseInt(event.currentTarget.value) : 0 }})
+    setNewBookProps((bookProps) => {return{ ... bookProps, quantity: event.target.value !== '' ? parseInt(event.target.value) : 0 }})
   }
 
   const handlePublishDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewBookProps((bookProps) => {return{ ... bookProps, isbn: event.currentTarget.value }})
+    setNewBookProps((bookProps) => {return{ ... bookProps, isbn: event.target.value }})
   }
 
   const handleTitleBlur = () => {
@@ -161,7 +161,7 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
     return new Blob([ uIntArray ], { type: imageType })
   }
 
-  const handleClick = () => {
+  const handleCreateUpdateClick = () => {
     if (inputError.titleError || inputError.isbnErrorEmpty || inputError.isbnErrorFormat || inputError.quantityError)
     {
       alert('Invalid requested inputs!')
@@ -228,7 +228,7 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
       </div>
       <div className={styles.add_modify_book_inputs}>
         <label>Description</label>
-        <textarea value={newBookProps.description} onChange={handleDescChange} rows={5} />
+        <textarea value={newBookProps.description} onChange={handleDescriptionChange} rows={5} />
       </div>
       <div className={styles.add_modify_book_inputs_val}>
         <div className={styles.add_modify_book_form_validation}>
@@ -292,13 +292,13 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
           />
           <button className={styles.add_author_button} onClick={handleShowAuthorForm}>+</button>
           {showAuthorForm && <CreateAuthorModal onCreateAuthorSuccess={getAuthorList} onHideModal={handleHideAuthorForm} />}
+          <div className={styles.add_author_form}>
+            <CreateAuthor onCreateAuthorSuccess={() => getAuthorList()}/>
+          </div>
         </div>
       </div>
       <div className={styles.add_modify_book_button}>
-        <button onClick={handleClick}>{props.book ? 'Modify' : 'Create'}</button>
-      </div>
-      <div className={styles.add_author_form}>
-        <CreateAuthor onCreateAuthorSuccess={() => getAuthorList()}/>
+        <button onClick={handleCreateUpdateClick}>{props.book ? 'Modify' : 'Create'}</button>
       </div>
     </div>
   )

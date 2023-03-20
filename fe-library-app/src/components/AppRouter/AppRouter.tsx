@@ -4,7 +4,8 @@ import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import PrivateRouter from './PrivateRouter'
-import AddModifyPage from './pages/CreateUpdatePage'
+import CreateUpdatePage from './pages/CreateUpdatePage'
+import { getToken } from '../../services/AuthService'
 
 const AppRouter = () => {
   return (
@@ -14,11 +15,11 @@ const AppRouter = () => {
       <Route element={<PrivateRouter/>}>
         <Route path='/profile' element={<ProfilePage />}/>
         <Route path='/add_modify' >
-          <Route index element={<AddModifyPage />} />
-          <Route path=':id' element={<AddModifyPage />} />
+          <Route index element={<CreateUpdatePage />} />
+          <Route path=':id' element={<CreateUpdatePage />} />
         </Route>
       </Route>
-      <Route path='/login' element={sessionStorage.getItem('token') == null ? <LoginPage /> : <Navigate to='/home'/>} />
+      <Route path='/login' element={ getToken() == null ? <LoginPage /> : <Navigate to='/home'/>} />
     </Routes>
   )
 }

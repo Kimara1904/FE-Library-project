@@ -8,6 +8,10 @@ export interface LoginResponse{
     Expiration: Date
 }
 
+export const getToken = () => {
+  return sessionStorage.getItem('token')
+}
+
 export const login = (Email: string, Password: string): Promise<AxiosResponse<LoginResponse>> => {
   const loginInfo = {
     Email,

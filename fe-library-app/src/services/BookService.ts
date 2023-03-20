@@ -32,7 +32,6 @@ export interface BookItemResponse{
     Title: string,
     Description: string,
     Isbn: string,
-    Quantity: number
     Cover: string,
     PublishDate: Date,
     Authors: AuthorBookResponse[]
@@ -43,7 +42,7 @@ export interface BookByIdItemResponse{
   Title: string,
   Description: string,
   ISBN: string,
-  Quantity: number
+  Quantity: number,
   Cover: string,
   PublishDate: Date,
   Authors: AuthorBookByIdResponse[]

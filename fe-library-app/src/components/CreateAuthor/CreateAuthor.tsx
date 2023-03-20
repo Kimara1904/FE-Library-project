@@ -26,6 +26,11 @@ const CreateAuthor = (props: CreateAuthorProps) => {
     }
   }
 
+  const clearForm = () => {
+    setAuthorFirstName('')
+    setAuthorLastName('')
+  }
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (authorFirstNameError || authorLastNameError) {
@@ -38,8 +43,7 @@ const CreateAuthor = (props: CreateAuthorProps) => {
       LastName: authorLastName
     }).then(() => {
       props.onCreateAuthorSuccess()
-      setAuthorFirstName('')
-      setAuthorLastName('')
+      clearForm()
       if (props.onHideModal) {
         props.onHideModal()
       }

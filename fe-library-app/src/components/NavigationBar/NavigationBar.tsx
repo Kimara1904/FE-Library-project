@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 
+import { getToken } from '../../services/AuthService'
 import styles from './NavigationBar.module.css'
 
 interface NavigationBarProps {
@@ -9,7 +10,7 @@ interface NavigationBarProps {
 const NavigationBar = (props: NavigationBarProps) => {
   const nav = useNavigate()
 
-  const loggedIn = sessionStorage.getItem('token') != null
+  const loggedIn = getToken() != null
 
   const handleLoginClick= () => {
     nav('/login')
