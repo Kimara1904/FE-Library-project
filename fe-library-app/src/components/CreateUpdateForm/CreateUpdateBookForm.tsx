@@ -44,6 +44,7 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
     isbnErrorFormat: false,
     quantityError: false
   })
+  const [ showAuthorModal, setShowAuthorModal ] = useState(false)
   const [ showAuthorForm, setShowAuthorForm ] = useState(false)
 
   const getAuthorList = () => {
@@ -192,19 +193,26 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
     }
   }
 
-  const handleShowAuthorForm = () => {
-    setShowAuthorForm(true)
+  const handleShowAuthorModal = () => {
+    setShowAuthorModal(true)
   }
 
-  const handleHideAuthorForm = () => {
-    setShowAuthorForm(false)
+  const handleHideAuthorModal = () => {
+    setShowAuthorModal(false)
+  }
+
+  const handleShowAuthorForm = () => {
+    setShowAuthorForm((perv) => !perv)
   }
 
   return (
     <div className={styles.add_modify_book_form}>
       <div className={styles.add_modify_book_cover}>
-        <img src={newBookProps.coverShow !== '' ? newBookProps.coverShow : DefaultBookCover} alt='Book cover' />
-        <input type='file' onChange={handleCoverChange} />
+        <img
+          src={newBookProps.coverShow !== '' ? newBookProps.coverShow : DefaultBookCover}
+          alt='Book cover'
+        />
+        <input type='file' onChange={handleCoverChange} disabled={showAuthorForm} />
       </div>
       <div className={styles.add_modify_book_inputs_val}>
         <div className={styles.add_modify_book_form_validation}>
@@ -220,6 +228,7 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
                 return { ...inputError, titleError: false }
               })
             }
+            disabled={showAuthorForm}
           />
         </div>
         <label className={styles.add_modify_book_error_label}>
@@ -228,7 +237,12 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
       </div>
       <div className={styles.add_modify_book_inputs}>
         <label>Description</label>
-        <textarea value={newBookProps.description} onChange={handleDescriptionChange} rows={5} />
+        <textarea
+          value={newBookProps.description}
+          onChange={handleDescriptionChange}
+          rows={5}
+          disabled={showAuthorForm}
+        />
       </div>
       <div className={styles.add_modify_book_inputs_val}>
         <div className={styles.add_modify_book_form_validation}>
@@ -249,6 +263,7 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
               })
               setIsbnErrorMessage('')
             }}
+            disabled={showAuthorForm}
           />
         </div>
         <label className={styles.add_modify_book_error_label}>{isbnErrorMessage}</label>
@@ -267,6 +282,8 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
                 return { ...inputError, quantityError: false }
               })
             }
+            min={0}
+            disabled={showAuthorForm}
           />
         </div>
         <label className={styles.add_modify_book_error_label}>
@@ -275,7 +292,12 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
       </div>
       <div className={styles.add_modify_book_inputs}>
         <label>Publish date</label>
-        <input type='date' value={newBookProps.publishDate} onChange={handlePublishDateChange} />
+        <input
+          type='date'
+          value={newBookProps.publishDate}
+          onChange={handlePublishDateChange}
+          disabled={showAuthorForm}
+        />
       </div>
       <div className={styles.add_modify_book_inputs}>
         <label>Authors</label>
@@ -289,14 +311,36 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
             isSearchable={true}
             maxMenuHeight={130}
             isMulti={true}
+            isDisabled={showAuthorForm}
+            styles={{
+              container: (baseStyles) => ({
+                ...baseStyles,
+                width: '100%'
+              })
+            }}
           />
-          <button className={styles.add_author_button} onClick={handleShowAuthorForm}>+</button>
-          {showAuthorForm && <CreateAuthorModal onCreateAuthorSuccess={getAuthorList} onHideModal={handleHideAuthorForm} />}
-          <div className={styles.add_author_form}>
-            <CreateAuthor onCreateAuthorSuccess={() => getAuthorList()}/>
-          </div>
+          <button className={styles.add_author_button_phone} onClick={handleShowAuthorModal}>
+            +
+          </button>
+          <button className={styles.add_author_button_desktop} onClick={handleShowAuthorForm}>
+            {showAuthorForm ? '-' : '+'}
+          </button>
+          {showAuthorModal && (
+            <CreateAuthorModal
+              onCreateAuthorSuccess={getAuthorList}
+              onHideModal={handleHideAuthorModal}
+            />
+          )}
         </div>
       </div>
+      {showAuthorForm && (
+        <CreateAuthor
+          onCreateAuthorSuccess={() => {
+            setShowAuthorForm(false)
+            getAuthorList()
+          }}
+        />
+      )}
       <div className={styles.add_modify_book_button}>
         <button onClick={handleCreateUpdateClick}>{props.book ? 'Modify' : 'Create'}</button>
       </div>
