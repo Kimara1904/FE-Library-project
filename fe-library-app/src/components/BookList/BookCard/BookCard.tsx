@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import { BookItemResponse, deleteBook } from '../../../services/BookService'
 import DefaultBookCover from './DefaultBookCover.png'
 import styles from './BookCard.module.css'
-import AddModifyBookModal from '../../../modals/AddModifyBookModal'
+import CreateUpdateBookModal from '../../../modals/CreateUpdateBookModal'
 
 interface BookProp{
     book: BookItemResponse
-    onClick: () => void,
+    onBookListModified: () => void,
 }
 
 const BookCard = (props: BookProp) => {
@@ -25,7 +25,7 @@ const BookCard = (props: BookProp) => {
       deleteBook(props.book.Id.toString())
         .then(() => {
           alert('You successfully delete book ' + props.book.Title)
-          props.onClick()
+          props.onBookListModified()
         })
         .catch(() => {
           alert('Something went wrong with deleting book')
@@ -35,7 +35,12 @@ const BookCard = (props: BookProp) => {
 
   return (
     <div className={styles.book_card}>
-      <img src={props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover} alt='Book cover' />
+      <img
+        src={
+          props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover
+        }
+        alt='Book cover'
+      />
       <div className={styles.info}>
         <label>Title: </label>
         <div className={styles.data}>{props.book.Title}</div>
@@ -47,15 +52,29 @@ const BookCard = (props: BookProp) => {
       <div className={styles.info}>
         <label>Authors: </label>
         <div className={styles.authors}>
-          {props.book.Authors.map((author) => <div className={styles.data} key={author.Id}>{author.LastName + ' ' + author.FirstName}</div>)}
+          {props.book.Authors.map((author) => (
+            <div className={styles.data} key={author.Id}>
+              {author.LastName + ' ' + author.FirstName}
+            </div>
+          ))}
         </div>
       </div>
       <div className={styles.extra_func}>
-        <button className={styles.book_phone_button} onClick={handleModifyClick}>Modify</button>
-        <button className={styles.book_desktop_button} onClick={() => setShowModifyModule(true)}>Modify</button>
+        <button className={styles.book_phone_button} onClick={handleModifyClick}>
+          Modify
+        </button>
+        <button className={styles.book_desktop_button} onClick={() => setShowModifyModule(true)}>
+          Modify
+        </button>
         <button onClick={handleDeleteClick}>Delete</button>
       </div>
-      {showModifyModule && <AddModifyBookModal onFinish={props.onClick} id={props.book.Id.toString()} onHide={() => setShowModifyModule(false)}/>}
+      {showModifyModule && (
+        <CreateUpdateBookModal
+          onCreateOrModifySuccess={props.onBookListModified}
+          book={props.book}
+          onHideModal={() => setShowModifyModule(false)}
+        />
+      )}
     </div>
   )
 }

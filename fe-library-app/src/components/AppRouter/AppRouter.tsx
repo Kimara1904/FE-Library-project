@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import PrivateRouter from './PrivateRouter'
-import AddModifyPage from './pages/AddModifyPage'
+import AddModifyPage from './pages/CreateUpdatePage'
 
 const AppRouter = () => {
   return (

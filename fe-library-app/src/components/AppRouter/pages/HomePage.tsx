@@ -102,7 +102,7 @@ const HomePage = () => {
             endMessage={<h4>You saw all books :)</h4>}
             scrollThreshold='75%'
           >
-            <BookList books={bookList} onChange={handleBookListChange} />
+            <BookList books={bookList} onBookListChange={handleBookListChange} />
           </InfiniteScroll>
         ) : (
           <h4>There is no books</h4>

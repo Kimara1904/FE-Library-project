@@ -6,12 +6,12 @@ import './App.css'
 import AppRouter from './components/AppRouter/AppRouter'
 import NavigationBar from './components/NavigationBar/NavigationBar'
 import SideBar from './components/SideBar/SideBar'
-import AddModifyBookModal from './modals/AddModifyBookModal'
+import CreateUpdateBookModal from './modals/CreateUpdateBookModal'
 import { configureAxiosRequestInterceptors } from './services/ServiceConfig'
 
 function App() {
   const [ sideBarOn, setSideBarOn ] = useState(false)
-  const [ addModifyBookModalOn, setAddModifyBookModalOn ] = useState(false)
+  const [ showCreateUpdateBookModal, setShowCreateUpdateBookModal ] = useState(false)
 
   const onNavClickHandler = () => {
     setSideBarOn((pervState) => !pervState)
@@ -19,7 +19,7 @@ function App() {
 
   configureAxiosRequestInterceptors()
 
-  const handleModalFinish = () => {
+  const handleAddModifyBook = () => {
     window.location.reload()
   }
 
@@ -28,12 +28,12 @@ function App() {
       <div className='App'>
         <div className='App-sideBar'>
           <NavigationBar onNavClick={onNavClickHandler} />
-          <SideBar display={sessionStorage.getItem('token') != null} afterChoosingHandle={() => setAddModifyBookModalOn(true)}/>
+          <SideBar display={sessionStorage.getItem('token') != null} onSideMenuItemClick={() => setShowCreateUpdateBookModal(true)}/>
         </div>
         <main className='App-main'>
-          <SideBar display={sideBarOn} afterChoosingHandle={() => setSideBarOn(false)}/>
+          <SideBar display={sideBarOn} onSideMenuItemClick={() => setSideBarOn(false)}/>
           <AppRouter />
-          {addModifyBookModalOn && <AddModifyBookModal onHide={() => setAddModifyBookModalOn(false)} onFinish={handleModalFinish}/>}
+          {showCreateUpdateBookModal && <CreateUpdateBookModal onHideModal={() => setShowCreateUpdateBookModal(false)} onCreateOrModifySuccess={handleAddModifyBook}/>}
         </main>
         <footer className='App-footer'>
           <NavigationBar onNavClick={onNavClickHandler} />
