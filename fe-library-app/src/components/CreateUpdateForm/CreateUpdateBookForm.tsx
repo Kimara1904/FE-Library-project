@@ -4,13 +4,13 @@ import Select, { MultiValue } from 'react-select'
 
 import CreateAuthorModal from '../../modals/CreateAuthorModal'
 import { GetAuthorResponse, getAuthors } from '../../services/AuthorService'
-import { BookItemResponse, createBook, modifyBook } from '../../services/BookService'
+import { BookByIdItemResponse, createBook, modifyBook } from '../../services/BookService'
 import CreateAuthor from '../CreateAuthor/CreateAuthor'
 import DefaultBookCover from '../BookList/BookCard/DefaultBookCover.png'
 import styles from './CreateUpdateBookForm.module.css'
 
 interface CreateUpdateBookFormProps {
-  book?: BookItemResponse,
+  book?: BookByIdItemResponse,
   onCreateOrModifySuccess: () => void,
   onHideModal?: () => void
 }
@@ -54,15 +54,15 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
       .catch(() => alert('Error with getting authors'))
   }
 
-  const setBookInitialValues = useCallback((book: BookItemResponse) => {
+  const setBookInitialValues = useCallback((book: BookByIdItemResponse) => {
     setNewBookProps((bookProps) => {
       return {
         ...bookProps,
         title: book.Title,
         description: book.Description,
-        isbn: book.Isbn,
+        isbn: book.ISBN,
         quantity: book.Quantity,
-        publishDate: new Intl.DateTimeFormat('en-CA').format(book.PublishDate),
+        publishDate: book.PublishDate ? new Intl.DateTimeFormat('en-CA').format(new Date(book.PublishDate)) : '',
         coverShow: 'data:image/png;base64,' + (book.Cover)
       }
     })
@@ -70,8 +70,8 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
       book.Authors.map((author) => {
         return {
           Id: author.Id,
-          FirstName: author.FirstName,
-          LastName: author.LastName
+          FirstName: author.Firstname,
+          LastName: author.Lastname
         }
       })
     )

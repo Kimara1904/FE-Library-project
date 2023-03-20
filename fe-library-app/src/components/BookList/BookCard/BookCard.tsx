@@ -71,7 +71,7 @@ const BookCard = (props: BookProp) => {
       {showModifyModule && (
         <CreateUpdateBookModal
           onCreateOrModifySuccess={props.onBookListModified}
-          book={props.book}
+          id={props.book.Id}
           onHideModal={() => setShowModifyModule(false)}
         />
       )}
