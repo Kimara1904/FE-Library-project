@@ -11,7 +11,7 @@ const BookDetail = () => {
   const { id } = useParams()
   const [ book, setBook ] = useState<BookByIdItemResponse>()
   const navigate = useNavigate()
-  const [ showModifyModal, setShowModifyModule ] = useState(false)
+  const [ showUpdateBookModal, setShowUpdateBookModal ] = useState(false)
 
   const getBookInfo = useCallback(() => {
     getBookById(id as string)
@@ -110,10 +110,10 @@ const BookDetail = () => {
               )}
             </tbody>
           </table>
-          {showModifyModal && (
+          {showUpdateBookModal && (
             <CreateUpdateBookModal
               onCreateOrModifySuccess={() => getBookInfo()}
-              onHideModal={() => setShowModifyModule(false)}
+              onHideModal={() => setShowUpdateBookModal(false)}
               id={parseInt(id as string)}
             />
           )}
@@ -121,7 +121,7 @@ const BookDetail = () => {
             <button className={style.book_modify_phone} onClick={handleModifyBookClick}>
               Modify
             </button>
-            <button className={style.book_modify_desktop} onClick={() => setShowModifyModule(true)}>
+            <button className={style.book_modify_desktop} onClick={() => setShowUpdateBookModal(true)}>
               Modify
             </button>
             <button onClick={handleBookDelete}>Delete</button>
