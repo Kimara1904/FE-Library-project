@@ -7,7 +7,7 @@ const AddModifyPage = () => {
   const { id } = useParams()
   return (
     <div>
-      <AddModifyBookForm onFinish={() => navigator('/home')} id={id}/>
+      <AddModifyBookForm onFinish={() => navigator('/book_detail/' + (id as string))} id={id}/>
     </div>
   )
 }

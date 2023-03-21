@@ -43,7 +43,8 @@ export interface BookByIdItemResponse{
   Title: string,
   Description: string,
   ISBN: string,
-  Quantity: number
+  Quantity: number,
+  Available: number,
   Cover: string,
   PublishDate: Date,
   Authors: AuthorBookByIdResponse[]

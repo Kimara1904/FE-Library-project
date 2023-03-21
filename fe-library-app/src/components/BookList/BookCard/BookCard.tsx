@@ -20,6 +20,10 @@ const BookCard = (props: BookProp) => {
     navigator('/add_modify/' + props.book.Id.toString())
   }
 
+  const handleImageClick = () => {
+    navigator('/book_detail/' + props.book.Id.toString())
+  }
+
   const handleDeleteClick = () => {
     if (confirm('Are you sure that you want to delete this book?') === true) {
       deleteBook(props.book.Id.toString())
@@ -35,7 +39,7 @@ const BookCard = (props: BookProp) => {
 
   return (
     <div className={styles.book_card}>
-      <img src={props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover} alt='Book cover' />
+      <img src={props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover} alt='Book cover' onClick={handleImageClick}/>
       <div className={styles.info}>
         <label>Title: </label>
         <div className={styles.data}>{props.book.Title}</div>

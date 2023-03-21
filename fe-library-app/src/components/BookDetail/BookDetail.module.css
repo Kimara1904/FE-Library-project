@@ -1,0 +1,50 @@
+@import '../../variables.css';
+.book_details table{
+    width: 250px;
+}
+.book_details img{
+    margin-top: 50px;
+    width: 250px;
+    height: 202px;
+}
+
+.book_details th{
+    text-align: left;
+    vertical-align: top;
+}
+
+.book_details td{
+    text-align: right;
+}
+
+.book_details button{
+    background-color: var(--dark_color);
+    color:white;
+    border-radius: 30px;
+    height: 40px;
+}
+
+.book_details_buttons{
+    margin-top: 50px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.book_modify_phone{
+    display: block;
+}
+
+.book_modify_desktop{
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .book_modify_phone{
+        display: none;
+    }
+    
+    .book_modify_desktop{
+        display: block;
+    }
+}

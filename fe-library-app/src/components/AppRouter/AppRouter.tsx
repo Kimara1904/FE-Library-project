@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import PrivateRouter from './PrivateRouter'
 import AddModifyPage from './pages/AddModifyPage'
+import BookDetail from '../BookDetail/BookDetail'
 
 const AppRouter = () => {
   return (
@@ -17,6 +18,7 @@ const AppRouter = () => {
           <Route index element={<AddModifyPage />} />
           <Route path=':id' element={<AddModifyPage />} />
         </Route>
+        <Route path='/book_detail/:id' element={<BookDetail />} />
       </Route>
       <Route path='/login' element={sessionStorage.getItem('token') == null ? <LoginPage /> : <Navigate to='/home'/>} />
     </Routes>
