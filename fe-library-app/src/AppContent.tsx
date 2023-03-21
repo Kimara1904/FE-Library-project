@@ -20,7 +20,7 @@ const AppContent = () => {
     setSideBarOn((pervState) => !pervState)
   }
 
-  const handleAddModifyBook = () => {
+  const handleCreateUpdateBook = () => {
     setShowCreateUpdateBookModal(false)
     navigate('/home')
   }
@@ -39,7 +39,7 @@ const AppContent = () => {
         {showCreateUpdateBookModal && (
           <CreateUpdateBookModal
             onHideModal={() => setShowCreateUpdateBookModal(false)}
-            onCreateOrModifySuccess={handleAddModifyBook}
+            onCreateOrModifySuccess={handleCreateUpdateBook}
           />
         )}
       </main>
