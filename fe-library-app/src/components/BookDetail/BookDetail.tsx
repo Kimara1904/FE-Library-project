@@ -13,26 +13,26 @@ const BookDetail = () => {
   const navigate = useNavigate()
   const [ showUpdateBookModal, setShowUpdateBookModal ] = useState(false)
 
-  const getBookInfo = useCallback(() => {
-    getBookById(id as string)
+  const getBookInfo = useCallback((id: string) => {
+    getBookById(id.toString())
       .then((response) => {
         setBook(response.data)
       })
       .catch(() => {
         alert('Error with getting book details')
       })
-  }, [ id ])
+  }, [])
 
   useEffect(() => {
-    getBookInfo()
-  }, [ getBookInfo ])
+    getBookInfo(id as string)
+  }, [ getBookInfo, id ])
 
   const handleModifyBookClick = () => {
-    navigate('/add_modify/' + (id as string))
+    navigate(`/add_modify/${id as string}`)
   }
 
   const handleBookDelete = () => {
-    if (confirm('Are you sure that you want to delete this book?') === true) {
+    if (confirm('Are you sure that you want to delete this book?')) {
       deleteBook(id as string)
         .then(() => {
           alert('You successfully delete book ' + (book?.Title as string))
@@ -97,7 +97,7 @@ const BookDetail = () => {
                   </td>
                 )}
               </tr>
-              {(book?.Authors.length as number) - 1 !== 0 && (
+              {(book?.Authors.length as number) > 0 && (
                 <>
                   {book?.Authors.slice(1).map((author) => (
                     <tr key={author.Id}>
@@ -112,7 +112,7 @@ const BookDetail = () => {
           </table>
           {showUpdateBookModal && (
             <CreateUpdateBookModal
-              onCreateOrModifySuccess={() => getBookInfo()}
+              onCreateOrModifySuccess={() => getBookInfo(id as string)}
               onHideModal={() => setShowUpdateBookModal(false)}
               id={parseInt(id as string)}
             />
