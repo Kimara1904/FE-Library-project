@@ -1,14 +1,14 @@
 import { FormEvent, useState } from 'react'
 
 import { createAuthor } from '../../services/AuthorService'
-import styles from './AddAuthor.module.css'
+import styles from './CreateAuthor.module.css'
 
-interface AddAuthorProps {
-  onFinish: () => void,
-  onHide?: () => void
+interface CreateAuthorProps {
+  onCreateAuthorSuccess: () => void,
+  onHideModal?: () => void
 }
 
-const AddAuthor = (props: AddAuthorProps) => {
+const CreateAuthor = (props: CreateAuthorProps) => {
   const [ authorFirstNameError, setAuthorFirstNameError ] = useState(false)
   const [ authorLastNameError, setAuthorLastNameError ] = useState(false)
   const [ authorFirstName, setAuthorFirstName ] = useState('')
@@ -26,9 +26,13 @@ const AddAuthor = (props: AddAuthorProps) => {
     }
   }
 
+  const clearForm = () => {
+    setAuthorFirstName('')
+    setAuthorLastName('')
+  }
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    event.stopPropagation()
     if (authorFirstNameError || authorLastNameError) {
       alert('Invalid requested inputs!')
       return
@@ -38,11 +42,10 @@ const AddAuthor = (props: AddAuthorProps) => {
       FirstName: authorFirstName,
       LastName: authorLastName
     }).then(() => {
-      props.onFinish()
-      setAuthorFirstName('')
-      setAuthorLastName('')
-      if (props.onHide) {
-        props.onHide()
+      props.onCreateAuthorSuccess()
+      clearForm()
+      if (props.onHideModal) {
+        props.onHideModal()
       }
       alert('Successfully created Author')
     }).catch(() => {
@@ -87,4 +90,4 @@ const AddAuthor = (props: AddAuthorProps) => {
   )
 }
 
-export default AddAuthor
+export default CreateAuthor

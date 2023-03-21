@@ -15,13 +15,13 @@ export interface GetBooksRequest{
     PageLength: number
 }
 
-interface AuthorBookResponse{
+export interface AuthorBookResponse{
     Id: number,
     FirstName: string,
     LastName: string
 }
 
-interface AuthorBookByIdResponse{
+export interface AuthorBookByIdResponse{
   Id: number,
   Firstname: string,
   Lastname: string
@@ -32,7 +32,6 @@ export interface BookItemResponse{
     Title: string,
     Description: string,
     Isbn: string,
-    Quantity: number
     Cover: string,
     PublishDate: Date,
     Authors: AuthorBookResponse[]
@@ -43,7 +42,7 @@ export interface BookByIdItemResponse{
   Title: string,
   Description: string,
   ISBN: string,
-  Quantity: number,
+  Quantity: number
   Available: number,
   Cover: string,
   PublishDate: Date,

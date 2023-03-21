@@ -6,7 +6,6 @@
     width: 85%;
     z-index: 100;
     overflow: hidden;
-    border-radius: 20px;
 }
 
 @media only screen and (min-width: 768px) {

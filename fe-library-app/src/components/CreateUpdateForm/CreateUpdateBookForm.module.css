@@ -59,8 +59,13 @@
     border: solid red;
 }
 
-.add_author_button{
+.add_author_button_phone{
+    display: block;
     width: 30px !important;
+}
+
+.add_author_button_desktop{
+    display: none;
 }
 
 .add_modify_select{
@@ -75,7 +80,7 @@
 
 @media only screen and (min-width: 768px) {
     .add_modify_book_form{
-        align-items: start;
+        align-items: center;
         padding-bottom: 10px;
         width: 100%;
         height: 90vh;
@@ -93,7 +98,9 @@
     }
 
     .add_modify_select{
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
     }
 
     .add_modify_book_cover{
@@ -101,25 +108,32 @@
         display: flex;
         flex-direction: column;
         align-content: center;
+        justify-content: center;
         flex-wrap: wrap;
     }
 
+    .add_modify_book_cover input{
+        width: 250px;
+    }
 
     .add_modify_book_cover,
     .add_modify_book_inputs,
     .add_modify_book_inputs_val{
-        width: 40%;
+        width: 70%;
     }
     
-    .add_author_button{
+    .add_author_button_phone{
         display: none;
+    }
+
+    .add_author_button_desktop{
+        display: block;
+        width: 50px !important;
+        margin-top: 10px;
     }
 
     .add_author_form{
         display: flex;
-        position: absolute;
-        top: 5%;
-        right: 10%;
     }
 
     .add_modify_book_inputs_val{
@@ -132,10 +146,6 @@
         margin-left: 0;
     }
 
-    .add_modify_book_inputs{
-        margin-left: 0;
-    }
-
     .add_modify_book_form img{
         margin-bottom: 20px;
     }
@@ -144,5 +154,11 @@
         width: 40%;
         display: flex;
         justify-content: center;
+    }
+
+    .add_modify_book_button button{
+        width: 40%;
+        height: 50px;
+        margin-bottom: 10px;
     }
 }

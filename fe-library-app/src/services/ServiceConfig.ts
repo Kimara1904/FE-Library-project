@@ -7,7 +7,7 @@ export const configureAxiosRequestInterceptors = () => {
     (config) => {
       const token = sessionStorage.getItem('token')
       if (token) {
-        config.headers['Authorization'] = `Bearer ${token != null ? token : ''}`
+        config.headers['Authorization'] = `Bearer ${token}`
       }
       return config
     },

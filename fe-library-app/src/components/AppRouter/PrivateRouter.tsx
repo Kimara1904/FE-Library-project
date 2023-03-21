@@ -1,7 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
+import { isThereToken } from '../../services/AuthService'
+
 const PrivateRouter = () => {
-  return sessionStorage.getItem('token') != null ? <Outlet /> : <Navigate to='/login' />
+  return isThereToken() ? <Outlet /> : <Navigate to='/login' />
 }
 
 export default PrivateRouter
