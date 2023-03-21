@@ -22,7 +22,8 @@ const AddModifyPage = () => {
             Cover: response.data.Cover,
             PublishDate: response.data.PublishDate,
             Authors: response.data.Authors,
-            Quantity: response.data.Quantity
+            Quantity: response.data.Quantity,
+            Available: response.data.Available
           })
         })
         .catch(() => alert('Error with getting book'))

@@ -6,6 +6,7 @@ import ProfilePage from './pages/ProfilePage'
 import PrivateRouter from './PrivateRouter'
 import CreateUpdatePage from './pages/CreateUpdatePage'
 import { isThereToken } from '../../services/AuthService'
+import BookDetail from '../BookDetail/BookDetail'
 
 const AppRouter = () => {
   return (
@@ -18,6 +19,7 @@ const AppRouter = () => {
           <Route index element={<CreateUpdatePage />} />
           <Route path=':id' element={<CreateUpdatePage />} />
         </Route>
+        <Route path='/book_detail/:id' element={<BookDetail />} />
       </Route>
       <Route path='/login' element={ !isThereToken() ? <LoginPage /> : <Navigate to='/home'/>} />
     </Routes>

@@ -17,6 +17,10 @@
   }
 }
 
+img {
+  object-fit: cover;
+}
+
 .App-main {
   height: 90%;
   display: flex;
