@@ -52,3 +52,21 @@
     border-radius: 30px;
     height: 30px;
 }
+
+.book_phone_button{
+    display: block;
+}
+
+.book_desktop_button{
+    display: none;
+}
+
+@media only screen and (min-width: 786px) {
+    .book_phone_button{
+        display: none;
+    }
+    
+    .book_desktop_button{
+        display: block;
+    }
+}

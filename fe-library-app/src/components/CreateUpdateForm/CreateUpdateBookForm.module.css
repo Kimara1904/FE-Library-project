@@ -1,0 +1,164 @@
+@import '../../variables.css';
+.add_modify_book_form{
+    display: flex;
+    flex-direction: column;
+}
+
+.add_modify_book_form input,
+.add_modify_book_form textarea{
+    border-radius: 10px;
+}
+
+.add_modify_book_form img{
+    width: 250px;
+    height: 200px;
+}
+
+.add_modify_book_inputs,
+.add_modify_book_cover{
+    margin-bottom: 25px;
+}
+
+.add_modify_book_inputs_val{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.add_modify_book_error_label{
+    font-size: 15px;
+    height: 15px;
+    align-self: flex-end;
+    margin-right: 17%;
+    margin-bottom: 5px;
+    color: red;
+    font-weight: bold;
+}
+
+.add_modify_book_cover{
+    margin-top: 25px;
+}
+
+.add_modify_book_inputs,
+.add_modify_book_form_validation{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 17%;
+    margin-right: 17%;
+}
+
+.add_modify_book_form button{
+    background-color: var(--dark_color);
+    color: white;
+    border-radius: 30px;
+    height: 30px;
+    width: 70px;
+}
+
+.add_modify_book_error_inputs{
+    border: solid red;
+}
+
+.add_author_button_phone{
+    display: block;
+    width: 30px !important;
+}
+
+.add_author_button_desktop{
+    display: none;
+}
+
+.add_modify_select{
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}
+
+.add_author_form{
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .add_modify_book_form{
+        align-items: center;
+        padding-bottom: 10px;
+        width: 100%;
+        height: 90vh;
+        padding-left: 20px;
+    }
+
+    .add_modify_book_form input{
+        height: 25px;
+        width: 50%;
+    }
+
+    .add_modify_book_form textarea,
+    .add_modify_select{
+        width: 50%;
+    }
+
+    .add_modify_select{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .add_modify_book_cover{
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .add_modify_book_cover input{
+        width: 250px;
+    }
+
+    .add_modify_book_cover,
+    .add_modify_book_inputs,
+    .add_modify_book_inputs_val{
+        width: 70%;
+    }
+    
+    .add_author_button_phone{
+        display: none;
+    }
+
+    .add_author_button_desktop{
+        display: block;
+        width: 50px !important;
+        margin-top: 10px;
+    }
+
+    .add_author_form{
+        display: flex;
+    }
+
+    .add_modify_book_inputs_val{
+        align-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .add_modify_book_form_validation{
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .add_modify_book_form img{
+        margin-bottom: 20px;
+    }
+
+    .add_modify_book_button{
+        width: 40%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .add_modify_book_button button{
+        width: 40%;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+}

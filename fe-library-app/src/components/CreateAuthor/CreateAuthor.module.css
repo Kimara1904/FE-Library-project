@@ -1,0 +1,65 @@
+@import '../../variables.css';
+
+.add_author form{
+    background-color: var(--orange_color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.add_author button{
+    background-color: var(--dark_color);
+    color: white;
+    border-radius: 30px;
+    height: 30px;
+    width: 70px;
+}
+
+.add_author_input{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.add_author_input input{
+    border-radius: 30px;
+}
+
+.add_author_input_error{
+    border: solid red;
+    margin-right: 5px;
+}
+
+.add_author_error_label,
+.add_author_error_transparent{
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.add_author_error_label{
+    color: red
+}
+
+.add_author_error_transparent{
+    color: transparent
+}
+
+.add_author_title{
+    margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 768px){
+    .add_author form{
+        background-color: var(--dark_color);
+        border-radius: 15px;
+        margin-bottom: 10px;
+        color:white;
+    }
+
+    .add_author button{
+        background-color: var(--orange_color) !important;
+    }
+}

@@ -1,33 +1,14 @@
-import { useState } from 'react'
-
 import { BrowserRouter } from 'react-router-dom'
 
-import './App.css'
-import AppRouter from './components/AppRouter/AppRouter'
-import NavigationBar from './components/NavigationBar/NavigationBar'
-import SideBar from './components/SideBar/SideBar'
+import AppContent from './AppContent'
+import { configureAxiosRequestInterceptors } from './services/ServiceConfig'
 
 function App() {
-  const [ sideBarOn, setSideBarOn ] = useState(false)
+  configureAxiosRequestInterceptors()
 
-  const onNavClickHandler = () => {
-    setSideBarOn((pervState) => !pervState)
-  }
   return (
     <BrowserRouter>
-      <div className='App'>
-        <div className='App-sideBar'>
-          <NavigationBar onNavClick={onNavClickHandler} />
-          <SideBar display={sessionStorage.getItem('token') != null} />
-        </div>
-        <main className='App-main'>
-          <SideBar display={sideBarOn} />
-          <AppRouter />
-        </main>
-        <footer className='App-footer'>
-          <NavigationBar onNavClick={onNavClickHandler} />
-        </footer>
-      </div>
+      <AppContent />
     </BrowserRouter>
   )
 }

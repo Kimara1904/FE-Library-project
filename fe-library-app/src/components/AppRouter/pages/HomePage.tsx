@@ -70,6 +70,21 @@ const HomePage = () => {
     setOrders(orderData)
   }
 
+  const handleBookListChange = () => {
+    getBooksPage({
+      PageNumber: 1,
+      PageLength: 15,
+      Order: orders,
+      Where: [
+        { Field: 'Title', Value: search, Operation: 2 },
+        { Field: 'Description', Value: filters?.description as string, Operation: 2 },
+        { Field: 'Isbn', Value: filters?.isbn as string, Operation: 2 },
+        { Field: 'Authors.FirstName', Value: filters?.authorFirstName as string, Operation: 2 },
+        { Field: 'Authors.LastName', Value: filters?.authorLastName as string, Operation: 2 }
+      ]
+    })
+  }
+
   return (
     <div className={styles.home}>
       <div className={styles.screen_search}>
@@ -87,7 +102,7 @@ const HomePage = () => {
             endMessage={<h4>You saw all books :)</h4>}
             scrollThreshold='75%'
           >
-            <BookList books={bookList} />
+            <BookList books={bookList} onBookListChange={handleBookListChange} />
           </InfiniteScroll>
         ) : (
           <h4>There is no books</h4>

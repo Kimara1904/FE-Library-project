@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { isThereToken } from '../../services/AuthService'
 import { Filters } from '../AppRouter/pages/HomePage'
 import Filter from '../Filter/Filter'
 import Order from '../Order/Order'
@@ -44,7 +45,7 @@ const SearchBar = (props: SearchBarProps) => {
       <button onClick={handleClickFilter}>Filter</button>
       <button onClick={handleClickOrder}>^</button>
       <div>
-        <a className={style.logout_link} href='./login' onClick={handleLogout}>{sessionStorage.getItem('token') != null ? 'Logout' : 'Login'}</a>
+        <a className={style.logout_link} href='./login' onClick={handleLogout}>{isThereToken() ? 'Logout' : 'Login'}</a>
       </div>
       <Filter filterChange={props.filterChange} switchShowFilter={showFilter} hideFilter={handleFilterHide}/>
       <Order orderChange={props.orderChange} switchShowOrder={showOrder} hideOrder={handleOrderHide}/>

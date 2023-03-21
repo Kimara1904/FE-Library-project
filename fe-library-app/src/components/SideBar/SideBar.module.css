@@ -1,5 +1,5 @@
 .sideBar {
-    display: block;
+    display: flex;
     bottom: 0;
     right: 0;
     position: fixed;
@@ -9,6 +9,17 @@
     background-color: var(--dark_color);
     color:white;
     opacity: 0.9;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 100px;
+}
+
+.sideBar button{
+    display: none;
+}
+
+.sideBar a{
+    color: white
 }
 
 .sideBarHidden {
@@ -18,7 +29,7 @@
 @media only screen and (min-width: 768px){
     .sideBar{
     display: block;
-    top: 18%;
+    top: 170px;
     bottom: 0;
     left: 0;
     position: fixed;
@@ -26,5 +37,14 @@
     width: var(--sidebar_width);
     background-color: var(--dark_color);
     color:white;
+    }
+
+    .sideBar a{
+        display: none;
+    }
+
+    .sideBar button{
+        all: unset;
+        text-decoration: underline;
     }
 }

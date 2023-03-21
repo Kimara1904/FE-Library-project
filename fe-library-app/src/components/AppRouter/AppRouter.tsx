@@ -4,6 +4,8 @@ import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import PrivateRouter from './PrivateRouter'
+import CreateUpdatePage from './pages/CreateUpdatePage'
+import { isThereToken } from '../../services/AuthService'
 
 const AppRouter = () => {
   return (
@@ -11,9 +13,13 @@ const AppRouter = () => {
       <Route path='/' element={<Navigate to="/home" />} />
       <Route path='/home' element={<HomePage />} />
       <Route element={<PrivateRouter/>}>
-        <Route path='profile' element={<ProfilePage />}/>
+        <Route path='/profile' element={<ProfilePage />}/>
+        <Route path='/add_modify' >
+          <Route index element={<CreateUpdatePage />} />
+          <Route path=':id' element={<CreateUpdatePage />} />
+        </Route>
       </Route>
-      <Route path='/login' element={sessionStorage.getItem('token') == null ? <LoginPage /> : <Navigate to='/home'/>} />
+      <Route path='/login' element={ !isThereToken() ? <LoginPage /> : <Navigate to='/home'/>} />
     </Routes>
   )
 }
