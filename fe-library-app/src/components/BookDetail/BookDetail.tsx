@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
 
-import AddModifyBookModal from '../../modals/AddModifyBookModal'
+import CreateUpdateBookModal from '../../modals/CreateUpdateBookModal'
 import { BookByIdItemResponse, deleteBook, getBookById } from '../../services/BookService'
 import DefaultBookCover from '../BookList/BookCard/DefaultBookCover.png'
 import style from './BookDetail.module.css'
@@ -105,7 +105,7 @@ const BookDetail = () => {
           )}
         </tbody>
       </table>
-      {showModifyModal && <AddModifyBookModal onFinish={() => getBookInfo} onHide={() => setShowModifyModule(false)} />}
+      {showModifyModal && <CreateUpdateBookModal onCreateOrModifySuccess={() => getBookInfo} onHideModal={() => setShowModifyModule(false)} />}
       <div className={style.book_details_buttons}>
         <button className={style.book_modify_phone} onClick={handleModifyBookClick}>Modify</button>
         <button className={style.book_modify_desktop} onClick={() => setShowModifyModule(false)}>Modify</button>
