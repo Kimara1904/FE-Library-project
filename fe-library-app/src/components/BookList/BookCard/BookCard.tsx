@@ -14,14 +14,14 @@ interface BookProp{
 
 const BookCard = (props: BookProp) => {
   const navigator = useNavigate()
-  const [ showModifyModule, setShowModifyModule ] = useState(false)
+  const [ showUpdateModal, setShowUpdateModal ] = useState(false)
 
   const handleModifyClick = () => {
     navigator('/add_modify/' + props.book.Id.toString())
   }
 
   const handleDeleteClick = () => {
-    if (confirm('Are you sure that you want to delete this book?') === true) {
+    if (confirm('Are you sure that you want to delete this book?')) {
       deleteBook(props.book.Id.toString())
         .then(() => {
           alert('You successfully delete book ' + props.book.Title)
@@ -63,16 +63,16 @@ const BookCard = (props: BookProp) => {
         <button className={styles.book_phone_button} onClick={handleModifyClick}>
           Modify
         </button>
-        <button className={styles.book_desktop_button} onClick={() => setShowModifyModule(true)}>
+        <button className={styles.book_desktop_button} onClick={() => setShowUpdateModal(true)}>
           Modify
         </button>
         <button onClick={handleDeleteClick}>Delete</button>
       </div>
-      {showModifyModule && (
+      {showUpdateModal && (
         <CreateUpdateBookModal
           onCreateOrModifySuccess={props.onBookListModified}
           id={props.book.Id}
-          onHideModal={() => setShowModifyModule(false)}
+          onHideModal={() => setShowUpdateModal(false)}
         />
       )}
     </div>

@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import PrivateRouter from './PrivateRouter'
 import CreateUpdatePage from './pages/CreateUpdatePage'
-import { getToken } from '../../services/AuthService'
+import { isThereToken } from '../../services/AuthService'
 
 const AppRouter = () => {
   return (
@@ -19,7 +19,7 @@ const AppRouter = () => {
           <Route path=':id' element={<CreateUpdatePage />} />
         </Route>
       </Route>
-      <Route path='/login' element={ getToken() == null ? <LoginPage /> : <Navigate to='/home'/>} />
+      <Route path='/login' element={ !isThereToken() ? <LoginPage /> : <Navigate to='/home'/>} />
     </Routes>
   )
 }

@@ -6,18 +6,18 @@ import AppRouter from './components/AppRouter/AppRouter'
 import NavigationBar from './components/NavigationBar/NavigationBar'
 import SideBar from './components/SideBar/SideBar'
 import CreateUpdateBookModal from './modals/CreateUpdateBookModal'
-import { getToken } from './services/AuthService'
+import { isThereToken } from './services/AuthService'
 
 import './App.css'
 
 const AppContent = () => {
-  const [ sideBarOn, setSideBarOn ] = useState(false)
+  const [ sideBarOpen, setSideBarOpen ] = useState(false)
   const [ showCreateUpdateBookModal, setShowCreateUpdateBookModal ] = useState(false)
 
   const navigate = useNavigate()
 
   const onNavClickHandler = () => {
-    setSideBarOn((pervState) => !pervState)
+    setSideBarOpen((pervState) => !pervState)
   }
 
   const handleCreateUpdateBook = () => {
@@ -29,12 +29,12 @@ const AppContent = () => {
       <div className='App-sideBar'>
         <NavigationBar onNavClick={onNavClickHandler} />
         <SideBar
-          display={getToken() != null}
+          display={isThereToken()}
           onSideMenuItemClick={() => setShowCreateUpdateBookModal(true)}
         />
       </div>
       <main className='App-main'>
-        <SideBar display={sideBarOn} onSideMenuItemClick={() => setSideBarOn(false)} />
+        <SideBar display={sideBarOpen} onSideMenuItemClick={() => setSideBarOpen(false)} />
         <AppRouter />
         {showCreateUpdateBookModal && (
           <CreateUpdateBookModal
