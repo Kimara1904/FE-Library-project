@@ -64,7 +64,7 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
         isbn: book.ISBN,
         quantity: book.Quantity,
         publishDate: book.PublishDate ? new Intl.DateTimeFormat('en-CA').format(new Date(book.PublishDate)) : '',
-        coverShow: 'data:image/png;base64,' + (book.Cover)
+        coverShow: book.Cover
       }
     })
     setSelectedAuthors(
@@ -97,7 +97,10 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
       setNewBookProps({ ... newBookProps, cover: files[0] })
       reader.onloadend = () => {
         if(reader.result)
-          setNewBookProps(({ ... newBookProps, coverShow: reader.result as string }))
+        {
+          const pervCover = (reader.result as string).split(';base64,')[1]
+          setNewBookProps((bookProps) => {return{ ... bookProps, coverShow: pervCover }})
+        }
       }
     }
   }
@@ -150,16 +153,14 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
   }
 
   const base64ToBlob = (base64Image: string): Blob => {
-    const parts = base64Image.split(';base64,')
-    const imageType = parts[0].split(':')[1]
-    const decodedData = window.atob(parts[1])
+    const decodedData = window.atob(base64Image)
     const uIntArray = new Uint8Array(decodedData.length)
 
     for (let i = 0; i < decodedData.length; ++i) {
       uIntArray[i] = decodedData.charCodeAt(i)
     }
 
-    return new Blob([ uIntArray ], { type: imageType })
+    return new Blob([ uIntArray ], { type: 'image/png' })
   }
 
   const handleCreateUpdateClick = () => {
@@ -209,7 +210,7 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
     <div className={styles.add_modify_book_form}>
       <div className={styles.add_modify_book_cover}>
         <img
-          src={newBookProps.coverShow !== '' ? newBookProps.coverShow : DefaultBookCover}
+          src={newBookProps.coverShow !== '' && newBookProps.coverShow != null ? 'data:image/png;base64,' + newBookProps.coverShow : DefaultBookCover}
           alt='Book cover'
         />
         <input type='file' onChange={handleCoverChange} disabled={showAuthorForm} />
