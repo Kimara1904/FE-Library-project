@@ -6,6 +6,9 @@ import { BookItemResponse, deleteBook } from '../../../services/BookService'
 import DefaultBookCover from './DefaultBookCover.png'
 import styles from './BookCard.module.css'
 import CreateUpdateBookModal from '../../../modals/CreateUpdateBookModal'
+import { rentBook } from '../../../services/RentalService'
+import { isThereToken } from '../../../services/AuthService'
+import { isAdmin, isLibrarian } from '../../../jwt/JwtRoleChecker'
 
 interface BookProp{
     book: BookItemResponse
@@ -15,6 +18,8 @@ interface BookProp{
 const BookCard = (props: BookProp) => {
   const navigator = useNavigate()
   const [ showUpdateModal, setShowUpdateModal ] = useState(false)
+
+  const isAuthorized = isAdmin() || isLibrarian()
 
   const handleModifyClick = () => {
     navigator('/add_modify/' + props.book.Id.toString())
@@ -34,6 +39,21 @@ const BookCard = (props: BookProp) => {
         .catch(() => {
           alert('Something went wrong with deleting book')
         })
+    }
+  }
+
+  const handleRentBook = () => {
+    if (props.book.Available> 0) {
+      rentBook(props.book.Id.toString())
+        .then(() => {
+          alert('Book is rented successfully')
+          props.book.Available = props.book.Available - 1
+        })
+        .catch(() => {
+          alert('Error with renting book')
+        })
+    } else {
+      alert('Book is not available for renting')
     }
   }
 
@@ -65,13 +85,18 @@ const BookCard = (props: BookProp) => {
         </div>
       </div>
       <div className={styles.extra_func}>
-        <button className={styles.book_phone_button} onClick={handleModifyClick}>
-          Modify
-        </button>
-        <button className={styles.book_desktop_button} onClick={() => setShowUpdateModal(true)}>
-          Modify
-        </button>
-        <button onClick={handleDeleteClick}>Delete</button>
+        {isThereToken() && <button onClick={handleRentBook}>Rent</button>}
+        {isAuthorized &&
+          <button className={styles.book_phone_button} onClick={handleModifyClick}>
+            Modify
+          </button>
+        }
+        {isAuthorized &&
+          <button className={styles.book_desktop_button} onClick={() => setShowUpdateModal(true)}>
+            Modify
+          </button>
+        }
+        {isAuthorized && <button onClick={handleDeleteClick}>Delete</button>}
       </div>
       {showUpdateModal && (
         <CreateUpdateBookModal

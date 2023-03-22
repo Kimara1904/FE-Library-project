@@ -25,6 +25,7 @@ img {
   height: 90%;
   display: flex;
   justify-content: center;
+  overflow-y: scroll;
 }
 
 .App-footer {

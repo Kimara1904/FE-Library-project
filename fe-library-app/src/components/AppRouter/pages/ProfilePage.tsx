@@ -5,7 +5,7 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <span>ProfilePage</span>
+      <div>ProfilePage</div>
       <a href="/login" onClick={logoutHandler}>Logout</a>
     </div>
   )

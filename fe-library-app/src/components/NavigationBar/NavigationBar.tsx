@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 
+import { isAdmin, isLibrarian } from '../../jwt/JwtRoleChecker'
 import { isThereToken } from '../../services/AuthService'
 import styles from './NavigationBar.module.css'
 
@@ -26,7 +27,7 @@ const NavigationBar = (props: NavigationBarProps) => {
             <Link to='/profile'>Profile</Link>
           </li>
         )}
-        {loggedIn && (
+        {(loggedIn && (isAdmin() || isLibrarian())) && (
           <li className={styles.special}>
             <button onClick={props.onNavClick}>More</button>
           </li>

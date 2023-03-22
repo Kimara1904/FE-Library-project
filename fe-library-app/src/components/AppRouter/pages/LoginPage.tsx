@@ -2,9 +2,11 @@ import { createRef, useState } from 'react'
 
 import { useNavigate } from 'react-router'
 import axios, { AxiosError } from 'axios'
+import jwtDecode from 'jwt-decode'
 
 import { login } from '../../../services/AuthService'
 import styles from './LoginPage.module.css'
+import { Jwt, roleKey } from '../../../jwt/JwtRoleChecker'
 
 const LoginPage = () => {
   const [ emailError, setEmailError ] = useState(false)
@@ -47,6 +49,7 @@ const LoginPage = () => {
     login(enteredEmail, enteredPassword)
       .then((response) => {
         sessionStorage.setItem('token', response.data.AccessToken)
+        sessionStorage.setItem('role', jwtDecode<Jwt>(response.data.AccessToken)[roleKey])
         navigation('/home')
       })
       .catch((error: AxiosError) => {

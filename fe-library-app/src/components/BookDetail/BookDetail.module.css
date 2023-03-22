@@ -2,6 +2,34 @@
 .book_details table{
     width: 250px;
     height: 250px;
+    margin-right: 0;
+}
+
+.rent_history{
+    width: auto;
+    display: flex;
+}
+
+.rented_date{
+    text-align: left;
+}
+
+.return_button{
+    text-align: right;
+}
+
+.return_button button{
+    background-color: var(--orange_color);
+    color:white;
+    border-radius: 30px;
+    height: 25px;
+    width: 55px;
+}
+
+.book_info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .book_details img{
@@ -10,7 +38,7 @@
     height: 202px;
 }
 
-.book_details tr{
+.book_details_rent_history tr{
     margin-bottom: 10px;
 }
 
@@ -31,6 +59,7 @@
     color:white;
     border-radius: 30px;
     height: 40px;
+    width: 55px;
 }
 
 .book_details_buttons{
@@ -47,6 +76,7 @@
 .book_modify_desktop{
     display: none;
 }
+
 
 @media only screen and (min-width: 768px) {
     .book_modify_phone{
@@ -79,5 +109,13 @@
 
     .book_details_rent_history{
         width: 100%;
+    }
+
+    .rent_history table{
+        width: 50%;
+    }
+
+    .rent_history{
+        justify-content: center;
     }
 }
