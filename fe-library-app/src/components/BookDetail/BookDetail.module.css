@@ -1,4 +1,13 @@
 @import '../../variables.css';
+.book_details_rent_history{
+    overflow-y: scroll;
+    height: 90%;
+}
+
+.book_details_rent_history::-webkit-scrollbar { 
+    display: none;
+}
+
 .book_details table{
     width: 250px;
     height: 250px;
@@ -82,6 +91,11 @@
     color: var(--dark_color)
 }
 
+.rent_history{
+    display: flex;
+    justify-content: center;
+}
+
 .rent_history table{
     font-size: 12px;
     width: 100%;
@@ -119,6 +133,7 @@
 
     .book_details_rent_history{
         width: 100%;
+        height: 100%;
     }
 
     .rent_history table{

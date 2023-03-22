@@ -46,5 +46,6 @@
     .sideBar button{
         all: unset;
         text-decoration: underline;
+        cursor: pointer;
     }
 }

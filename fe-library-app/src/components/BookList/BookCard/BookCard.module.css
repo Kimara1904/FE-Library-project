@@ -4,6 +4,7 @@
     background-color: var(--orange_color);
     width: 250px;
     display: grid;
+    cursor: pointer;
 }
 
 .book_card img{
