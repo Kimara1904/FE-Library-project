@@ -91,6 +91,7 @@
         width: 100%;
         height: 90vh;
         padding-left: 20px;
+        overflow-y: unset;
     }
 
     .add_modify_book_form input{
