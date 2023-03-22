@@ -21,7 +21,8 @@ const BookCard = (props: BookProp) => {
 
   const isAuthorized = isAdmin() || isLibrarian()
 
-  const handleModifyClick = () => {
+  const handleModifyClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
     navigator('/add_modify/' + props.book.Id.toString())
   }
 
@@ -29,7 +30,8 @@ const BookCard = (props: BookProp) => {
     navigator('/book_detail/' + props.book.Id.toString())
   }
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
     if (confirm('Are you sure that you want to delete this book?')) {
       deleteBook(props.book.Id.toString())
         .then(() => {
@@ -42,7 +44,8 @@ const BookCard = (props: BookProp) => {
     }
   }
 
-  const handleRentBook = () => {
+  const handleRentBook = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
     if (props.book.Available> 0) {
       rentBook(props.book.Id.toString())
         .then(() => {
@@ -58,13 +61,12 @@ const BookCard = (props: BookProp) => {
   }
 
   return (
-    <div className={styles.book_card}>
+    <div className={styles.book_card} onClick={handleImageClick}>
       <img
         src={
           props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover
         }
         alt='Book cover'
-        onClick={handleImageClick}
       />
       <div className={styles.info}>
         <label>Title: </label>
@@ -86,23 +88,33 @@ const BookCard = (props: BookProp) => {
       </div>
       <div className={styles.extra_func}>
         {isThereToken() && <button onClick={handleRentBook}>Rent</button>}
-        {isAuthorized &&
+        {isAuthorized && (
           <button className={styles.book_phone_button} onClick={handleModifyClick}>
             Modify
           </button>
-        }
-        {isAuthorized &&
-          <button className={styles.book_desktop_button} onClick={() => setShowUpdateModal(true)}>
+        )}
+        {isAuthorized && (
+          <button
+            className={styles.book_desktop_button}
+            onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+              event.stopPropagation()
+              setShowUpdateModal(true)
+            }}
+          >
             Modify
           </button>
-        }
+        )}
         {isAuthorized && <button onClick={handleDeleteClick}>Delete</button>}
       </div>
       {showUpdateModal && (
         <CreateUpdateBookModal
-          onCreateOrModifySuccess={props.onBookListModified}
+          onCreateOrModifySuccess={() => {
+            props.onBookListModified
+          }}
           id={props.book.Id}
-          onHideModal={() => setShowUpdateModal(false)}
+          onHideModal={() =>
+            setShowUpdateModal(false)
+          }
         />
       )}
     </div>

@@ -5,7 +5,15 @@ interface BackDropProps {
 }
 
 const BackDrop = (props: BackDropProps) => {
-  return <div className={styles.backdrop} onClick={props.onHideModal}/>
+  return (
+    <div
+      className={styles.backdrop}
+      onClick={(event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        event.stopPropagation()
+        props.onHideModal()
+      }}
+    />
+  )
 }
 
 export default BackDrop

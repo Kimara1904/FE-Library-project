@@ -138,7 +138,7 @@ const BookDetail = () => {
               </tr>
               <tr>
                 <th>Available</th>
-                <td>{isAuthorized ? book?.Available : (book?.Available as number) > 0}</td>
+                <td>{isAuthorized ? book?.Available : (book?.Available as number) > 0 ? 'Yes' : 'No'}</td>
               </tr>
               <tr>
                 <th>Publish date</th>
@@ -223,7 +223,7 @@ const BookDetail = () => {
                         </td>
                         <td>{rentHistory.User.Email}</td>
                         {rentHistory.IsReturned ? (
-                          <td />
+                          <td className={style.return_button}>Returned</td>
                         ) : (
                           <td className={style.return_button}>
                             <button onClick={() => handleBookReturn(rentHistory.Id)}>Return</button>
