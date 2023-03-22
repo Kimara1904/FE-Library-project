@@ -1,42 +1,63 @@
+import { useState } from 'react'
+
 import { Link, useNavigate } from 'react-router-dom'
 
-import { isThereToken } from '../../services/AuthService'
+import { isAdmin, isLibrarian } from '../../jwt/JwtRoleChecker'
+import CreateUpdateBookModal from '../../modals/CreateUpdateBookModal'
+import { isUserLoggedIn } from '../../services/AuthService'
 import styles from './NavigationBar.module.css'
 
-interface NavigationBarProps {
-  onNavClick: () => void
-}
 
-const NavigationBar = (props: NavigationBarProps) => {
-  const nav = useNavigate()
+const NavigationBar = () => {
+  const [ showCreateUpdateBookModal, setShowCreateUpdateBookModal ] = useState(false)
+  const navigate = useNavigate()
 
-  const loggedIn = isThereToken()
+  const isAdminOrLibrarian = isAdmin() || isLibrarian()
 
   const handleLoginClick= () => {
-    nav('/login')
+    navigate('/login')
   }
+
+  const handleCreateUpdateBook = () => {
+    setShowCreateUpdateBookModal(false)
+    navigate('/home')
+  }
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('role')
+    navigate('/login')
+  }
+
   return (
     <nav className={styles.nav}>
       <ul>
         <li>
           <Link to='/home'>Home</Link>
         </li>
-        {loggedIn && (
+        {isUserLoggedIn() && isAdminOrLibrarian&& (
           <li>
-            <Link to='/profile'>Profile</Link>
+            <Link className={styles.add_book_phone} to='/add_modify'>Add new Book</Link>
+            <button className={styles.add_book_desktop} onClick={() => setShowCreateUpdateBookModal(true)}>Add new Book</button>
           </li>
         )}
-        {loggedIn && (
+        {isUserLoggedIn() && (
           <li className={styles.special}>
-            <button onClick={props.onNavClick}>More</button>
+            <button onClick={handleLogout}>Logout</button>
           </li>
         )}
-        {!loggedIn && (
+        {!isUserLoggedIn() && (
           <button className={styles.login_button} onClick={handleLoginClick}>
             Login
           </button>
         )}
       </ul>
+      {showCreateUpdateBookModal && (
+        <CreateUpdateBookModal
+          onHideModal={() => setShowCreateUpdateBookModal(false)}
+          onCreateOrModifySuccess={handleCreateUpdateBook}
+        />
+      )}
     </nav>
   )
 }

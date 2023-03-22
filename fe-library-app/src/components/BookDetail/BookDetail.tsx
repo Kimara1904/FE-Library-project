@@ -2,16 +2,21 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { isAdmin, isLibrarian } from '../../jwt/JwtRoleChecker'
 import CreateUpdateBookModal from '../../modals/CreateUpdateBookModal'
+import { isUserLoggedIn } from '../../services/AuthService'
 import { BookByIdItemResponse, deleteBook, getBookById } from '../../services/BookService'
+import { getRentalHistory, rentBook, RentHistoryResponse, returnBook } from '../../services/RentalService'
 import DefaultBookCover from '../BookList/BookCard/DefaultBookCover.png'
 import style from './BookDetail.module.css'
 
 const BookDetail = () => {
   const { id } = useParams()
   const [ book, setBook ] = useState<BookByIdItemResponse>()
+  const [ rentalHistory, setRentalHistory ] = useState<RentHistoryResponse[]>([])
   const navigate = useNavigate()
   const [ showUpdateBookModal, setShowUpdateBookModal ] = useState(false)
+  const isAdminOrLibrarian = isAdmin() || isLibrarian()
 
   const getBookInfo = useCallback((id: string) => {
     getBookById(id.toString())
@@ -23,9 +28,23 @@ const BookDetail = () => {
       })
   }, [])
 
+  const getRentalHistoryForBook = useCallback((id: string) => {
+    getRentalHistory(id)
+      .then((response) => {
+        setRentalHistory(response.data)
+      })
+      .catch(() => {
+        alert('Error with getting rental history')
+      })
+  }, [])
+
   useEffect(() => {
     getBookInfo(id as string)
   }, [ getBookInfo, id ])
+
+  useEffect(() => {
+    getRentalHistoryForBook(id as string)
+  }, [ getRentalHistoryForBook, id ])
 
   const handleModifyBookClick = () => {
     navigate(`/add_modify/${id as string}`)
@@ -44,6 +63,44 @@ const BookDetail = () => {
     }
   }
 
+  const handleBookReturn = (rentId: number) => {
+    returnBook(rentId.toString())
+      .then(() => {
+        alert('Book is returned successfully')
+        getRentalHistoryForBook(id as string)
+        setBook((prevState) => {
+          if (prevState) {
+            return {
+              ...prevState,
+              Available: prevState && prevState.Available + 1
+            }
+          }
+        })
+      })
+      .catch(() => {
+        alert('Error with returning book')
+      })
+  }
+
+  const handleRentBook = () => {
+    rentBook(id as string)
+      .then(() => {
+        alert('Book is rented successfully')
+        getRentalHistoryForBook(id as string)
+        setBook((prevState) => {
+          if (prevState) {
+            return {
+              ...prevState,
+              Available: prevState && prevState.Available - 1
+            }
+          }
+        })
+      })
+      .catch(() => {
+        alert('Error with renting book')
+      })
+  }
+
   return (
     <div className={style.book_details_rent_history}>
       <h1>Book Detail:</h1>
@@ -56,7 +113,7 @@ const BookDetail = () => {
           }
           alt='Book cover'
         />
-        <div>
+        <div className={style.book_info}>
           <table>
             <tbody>
               <tr>
@@ -77,7 +134,7 @@ const BookDetail = () => {
               </tr>
               <tr>
                 <th>Available</th>
-                <td>{book?.Available}</td>
+                <td>{isAdminOrLibrarian ? book?.Available : (book?.Available as number) > 0 ? 'Yes' : 'No'}</td>
               </tr>
               <tr>
                 <th>Publish date</th>
@@ -86,7 +143,12 @@ const BookDetail = () => {
                 </td>
               </tr>
               <tr>
-                <th className={style.book_details_author_th}rowSpan={book?.Authors.length !== 0 ? book?.Authors.length : 1}>Authors</th>
+                <th
+                  className={style.book_details_author_th}
+                  rowSpan={book?.Authors.length !== 0 ? book?.Authors.length : 1}
+                >
+                  Authors
+                </th>
                 {book?.Authors.length === 0 ? (
                   <td />
                 ) : (
@@ -118,16 +180,60 @@ const BookDetail = () => {
             />
           )}
           <div className={style.book_details_buttons}>
-            <button className={style.book_modify_phone} onClick={handleModifyBookClick}>
-              Modify
-            </button>
-            <button className={style.book_modify_desktop} onClick={() => setShowUpdateBookModal(true)}>
-              Modify
-            </button>
-            <button onClick={handleBookDelete}>Delete</button>
+            {isUserLoggedIn() && <button onClick={handleRentBook} disabled={(book?.Available as number) <= 0}>Rent</button>}
+            {isAdminOrLibrarian && (
+              <button className={style.book_modify_phone} onClick={handleModifyBookClick}>
+                Modify
+              </button>
+            )}
+            {isAdminOrLibrarian && (
+              <button
+                className={style.book_modify_desktop}
+                onClick={() => setShowUpdateBookModal(true)}
+              >
+                Modify
+              </button>
+            )}
+            {isAdminOrLibrarian && <button onClick={handleBookDelete}>Delete</button>}
           </div>
         </div>
       </div>
+      {isAdminOrLibrarian &&
+        <>
+          <h1>Rental History</h1>
+          <div className={style.rent_history}>
+            {rentalHistory.length === 0 ? (
+              <h4>There is no rent history</h4>
+            ) : (
+              <table>
+                <tbody>
+                  <tr>
+                    <th className={style.rented_date}>Rented Date</th>
+                    <th>User</th>
+                  </tr>
+                  {rentalHistory.map((rentHistory) => {
+                    return (
+                      <tr key={rentHistory.Id}>
+                        <td className={style.rented_date}>
+                          {new Date(rentHistory.RentDate).toDateString().substring(4)}
+                        </td>
+                        <td>{rentHistory.User.Email}</td>
+                        {rentHistory.IsReturned ? (
+                          <td className={style.return_button}>Returned</td>
+                        ) : (
+                          <td className={style.return_button}>
+                            <button onClick={() => handleBookReturn(rentHistory.Id)}>Return</button>
+                          </td>
+                        )}
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </>
+      }
     </div>
   )
 }

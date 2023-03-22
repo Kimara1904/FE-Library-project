@@ -33,6 +33,7 @@ export interface BookItemResponse{
     Description: string,
     Isbn: string,
     Cover: string,
+    Available: number,
     PublishDate: Date,
     Authors: AuthorBookResponse[]
 }

@@ -8,7 +8,7 @@ export interface LoginResponse{
     Expiration: Date
 }
 
-export const isThereToken = () => {
+export const isUserLoggedIn = () => {
   return sessionStorage.getItem('token') !== null
 }
 

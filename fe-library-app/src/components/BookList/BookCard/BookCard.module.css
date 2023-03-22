@@ -4,6 +4,7 @@
     background-color: var(--orange_color);
     width: 250px;
     display: grid;
+    cursor: pointer;
 }
 
 .book_card img{
@@ -51,6 +52,7 @@
     color:white;
     border-radius: 30px;
     height: 30px;
+    width: 55px;
 }
 
 .book_phone_button{
@@ -59,6 +61,12 @@
 
 .book_desktop_button{
     display: none;
+}
+
+.extra_func button[disabled]{
+    background-color: var(--gray_color);
+    color: var(--dark_color);
+    cursor: unset;
 }
 
 @media only screen and (min-width: 786px) {

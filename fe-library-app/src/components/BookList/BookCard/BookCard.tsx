@@ -6,6 +6,9 @@ import { BookItemResponse, deleteBook } from '../../../services/BookService'
 import DefaultBookCover from './DefaultBookCover.png'
 import styles from './BookCard.module.css'
 import CreateUpdateBookModal from '../../../modals/CreateUpdateBookModal'
+import { rentBook } from '../../../services/RentalService'
+import { isUserLoggedIn } from '../../../services/AuthService'
+import { isAdmin, isLibrarian } from '../../../jwt/JwtRoleChecker'
 
 interface BookProp{
     book: BookItemResponse
@@ -16,15 +19,19 @@ const BookCard = (props: BookProp) => {
   const navigator = useNavigate()
   const [ showUpdateModal, setShowUpdateModal ] = useState(false)
 
-  const handleModifyClick = () => {
+  const isAdminOrLibrarian = isAdmin() || isLibrarian()
+
+  const handleModifyClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
     navigator('/add_modify/' + props.book.Id.toString())
   }
 
-  const handleImageClick = () => {
+  const handleBookCardClick = () => {
     navigator('/book_detail/' + props.book.Id.toString())
   }
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
     if (confirm('Are you sure that you want to delete this book?')) {
       deleteBook(props.book.Id.toString())
         .then(() => {
@@ -37,14 +44,25 @@ const BookCard = (props: BookProp) => {
     }
   }
 
+  const handleRentBook = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
+    rentBook(props.book.Id.toString())
+      .then(() => {
+        alert('Book is rented successfully')
+        props.book.Available = props.book.Available - 1
+      })
+      .catch(() => {
+        alert('Error with renting book')
+      })
+  }
+
   return (
-    <div className={styles.book_card}>
+    <div className={styles.book_card} onClick={handleBookCardClick}>
       <img
         src={
           props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover
         }
         alt='Book cover'
-        onClick={handleImageClick}
       />
       <div className={styles.info}>
         <label>Title: </label>
@@ -65,19 +83,34 @@ const BookCard = (props: BookProp) => {
         </div>
       </div>
       <div className={styles.extra_func}>
-        <button className={styles.book_phone_button} onClick={handleModifyClick}>
-          Modify
-        </button>
-        <button className={styles.book_desktop_button} onClick={() => setShowUpdateModal(true)}>
-          Modify
-        </button>
-        <button onClick={handleDeleteClick}>Delete</button>
+        {isUserLoggedIn() && <button onClick={handleRentBook} disabled={props.book.Available <= 0}>Rent</button>}
+        {isAdminOrLibrarian && (
+          <button className={styles.book_phone_button} onClick={handleModifyClick}>
+            Modify
+          </button>
+        )}
+        {isAdminOrLibrarian && (
+          <button
+            className={styles.book_desktop_button}
+            onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+              event.stopPropagation()
+              setShowUpdateModal(true)
+            }}
+          >
+            Modify
+          </button>
+        )}
+        {isAdminOrLibrarian && <button onClick={handleDeleteClick}>Delete</button>}
       </div>
       {showUpdateModal && (
         <CreateUpdateBookModal
-          onCreateOrModifySuccess={props.onBookListModified}
+          onCreateOrModifySuccess={() => {
+            props.onBookListModified
+          }}
           id={props.book.Id}
-          onHideModal={() => setShowUpdateModal(false)}
+          onHideModal={() =>
+            setShowUpdateModal(false)
+          }
         />
       )}
     </div>

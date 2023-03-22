@@ -147,7 +147,8 @@ const CreateUpdateBookForm = (props: CreateUpdateBookFormProps) => {
     return new Blob([ uIntArray ], { type: 'image/png' })
   }
 
-  const handleCreateUpdateClick = () => {
+  const handleCreateUpdateClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
     if (inputError.titleError || inputError.isbnErrorEmpty || inputError.isbnErrorFormat || inputError.quantityError)
     {
       alert('Invalid requested inputs!')

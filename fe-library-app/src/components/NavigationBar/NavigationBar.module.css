@@ -27,6 +27,14 @@
     font-size: 16px;
 }
 
+.add_book_phone{
+    display: block;
+}
+
+.add_book_desktop{
+    display: none;
+}
+
 @media only screen and (min-width: 768px){ 
     .nav ul{
         display: flexbox;
@@ -37,8 +45,20 @@
     .nav li {
         margin-top: 50px;
     }
+
     .special,
     .login_button{
         display: none;
+    }
+
+    .add_book_phone{
+        display: none;
+    }
+
+    .add_book_desktop{
+        display: block;
+        all: unset;
+        cursor: pointer;
+        text-decoration: underline;
     }
 }

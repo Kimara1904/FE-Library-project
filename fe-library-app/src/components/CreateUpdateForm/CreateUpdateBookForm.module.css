@@ -2,6 +2,8 @@
 .add_modify_book_form{
     display: flex;
     flex-direction: column;
+    height: 90%;
+    overflow-y: scroll;
 }
 
 .add_modify_book_form input,
@@ -78,6 +80,10 @@
     display: none;
 }
 
+.add_modify_book_button{
+    margin-bottom: 10px;
+}
+
 @media only screen and (min-width: 768px) {
     .add_modify_book_form{
         align-items: center;
@@ -85,6 +91,7 @@
         width: 100%;
         height: 90vh;
         padding-left: 20px;
+        overflow-y: unset;
     }
 
     .add_modify_book_form input{
