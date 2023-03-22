@@ -77,6 +77,16 @@
     display: none;
 }
 
+.book_details button[disabled]{
+    background-color: var(--gray_color);
+    color: var(--dark_color)
+}
+
+.rent_history table{
+    font-size: 12px;
+    width: 100%;
+}
+
 
 @media only screen and (min-width: 768px) {
     .book_modify_phone{
@@ -113,6 +123,7 @@
 
     .rent_history table{
         width: 50%;
+        font-size: 16px;
     }
 
     .rent_history{

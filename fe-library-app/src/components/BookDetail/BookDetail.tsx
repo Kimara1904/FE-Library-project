@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { isAdmin, isLibrarian } from '../../jwt/JwtRoleChecker'
 import CreateUpdateBookModal from '../../modals/CreateUpdateBookModal'
-import { isThereToken } from '../../services/AuthService'
+import { isUserLoggedIn } from '../../services/AuthService'
 import { BookByIdItemResponse, deleteBook, getBookById } from '../../services/BookService'
 import { getRentalHistory, rentBook, RentHistoryResponse, returnBook } from '../../services/RentalService'
 import DefaultBookCover from '../BookList/BookCard/DefaultBookCover.png'
@@ -16,7 +16,7 @@ const BookDetail = () => {
   const [ rentalHistory, setRentalHistory ] = useState<RentHistoryResponse[]>([])
   const navigate = useNavigate()
   const [ showUpdateBookModal, setShowUpdateBookModal ] = useState(false)
-  const isAuthorized = isAdmin() || isLibrarian()
+  const isAdminOrLibrarian = isAdmin() || isLibrarian()
 
   const getBookInfo = useCallback((id: string) => {
     getBookById(id.toString())
@@ -72,7 +72,7 @@ const BookDetail = () => {
           if (prevState) {
             return {
               ...prevState,
-              Available: prevState && prevState.Available ? prevState.Available + 1 : 0
+              Available: prevState && prevState.Available + 1
             }
           }
         })
@@ -83,26 +83,22 @@ const BookDetail = () => {
   }
 
   const handleRentBook = () => {
-    if ((book?.Available as number) > 0) {
-      rentBook(id as string)
-        .then(() => {
-          alert('Book is rented successfully')
-          getRentalHistoryForBook(id as string)
-          setBook((prevState) => {
-            if (prevState) {
-              return {
-                ...prevState,
-                Available: prevState && prevState.Available ? prevState.Available - 1 : 0
-              }
+    rentBook(id as string)
+      .then(() => {
+        alert('Book is rented successfully')
+        getRentalHistoryForBook(id as string)
+        setBook((prevState) => {
+          if (prevState) {
+            return {
+              ...prevState,
+              Available: prevState && prevState.Available - 1
             }
-          })
+          }
         })
-        .catch(() => {
-          alert('Error with renting book')
-        })
-    } else {
-      alert('Book is not available for renting')
-    }
+      })
+      .catch(() => {
+        alert('Error with renting book')
+      })
   }
 
   return (
@@ -138,7 +134,7 @@ const BookDetail = () => {
               </tr>
               <tr>
                 <th>Available</th>
-                <td>{isAuthorized ? book?.Available : (book?.Available as number) > 0 ? 'Yes' : 'No'}</td>
+                <td>{isAdminOrLibrarian ? book?.Available : (book?.Available as number) > 0 ? 'Yes' : 'No'}</td>
               </tr>
               <tr>
                 <th>Publish date</th>
@@ -184,13 +180,13 @@ const BookDetail = () => {
             />
           )}
           <div className={style.book_details_buttons}>
-            {isThereToken() && <button onClick={handleRentBook}>Rent</button>}
-            {isAuthorized && (
+            {isUserLoggedIn() && <button onClick={handleRentBook} disabled={(book?.Available as number) <= 0}>Rent</button>}
+            {isAdminOrLibrarian && (
               <button className={style.book_modify_phone} onClick={handleModifyBookClick}>
                 Modify
               </button>
             )}
-            {isAuthorized && (
+            {isAdminOrLibrarian && (
               <button
                 className={style.book_modify_desktop}
                 onClick={() => setShowUpdateBookModal(true)}
@@ -198,11 +194,11 @@ const BookDetail = () => {
                 Modify
               </button>
             )}
-            {isAuthorized && <button onClick={handleBookDelete}>Delete</button>}
+            {isAdminOrLibrarian && <button onClick={handleBookDelete}>Delete</button>}
           </div>
         </div>
       </div>
-      {isAuthorized &&
+      {isAdminOrLibrarian &&
         <>
           <h1>Rental History</h1>
           <div className={style.rent_history}>

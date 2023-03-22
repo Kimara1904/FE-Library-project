@@ -61,6 +61,11 @@
     display: none;
 }
 
+.extra_func button[disabled]{
+    background-color: var(--gray_color);
+    color: var(--dark_color)
+}
+
 @media only screen and (min-width: 786px) {
     .book_phone_button{
         display: none;

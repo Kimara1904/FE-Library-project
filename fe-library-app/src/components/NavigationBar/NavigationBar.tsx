@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 
 import { isAdmin, isLibrarian } from '../../jwt/JwtRoleChecker'
-import { isThereToken } from '../../services/AuthService'
+import { isUserLoggedIn } from '../../services/AuthService'
 import styles from './NavigationBar.module.css'
 
 interface NavigationBarProps {
@@ -11,7 +11,7 @@ interface NavigationBarProps {
 const NavigationBar = (props: NavigationBarProps) => {
   const nav = useNavigate()
 
-  const loggedIn = isThereToken()
+  const isAdminOrLibrarian = isAdmin() || isLibrarian()
 
   const handleLoginClick= () => {
     nav('/login')
@@ -22,17 +22,17 @@ const NavigationBar = (props: NavigationBarProps) => {
         <li>
           <Link to='/home'>Home</Link>
         </li>
-        {loggedIn && (
+        {isUserLoggedIn() && (
           <li>
             <Link to='/profile'>Profile</Link>
           </li>
         )}
-        {(loggedIn && (isAdmin() || isLibrarian())) && (
+        {(isUserLoggedIn() && isAdminOrLibrarian) && (
           <li className={styles.special}>
             <button onClick={props.onNavClick}>More</button>
           </li>
         )}
-        {!loggedIn && (
+        {!isUserLoggedIn() && (
           <button className={styles.login_button} onClick={handleLoginClick}>
             Login
           </button>

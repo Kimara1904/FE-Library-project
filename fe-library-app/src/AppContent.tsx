@@ -6,7 +6,7 @@ import AppRouter from './components/AppRouter/AppRouter'
 import NavigationBar from './components/NavigationBar/NavigationBar'
 import SideBar from './components/SideBar/SideBar'
 import CreateUpdateBookModal from './modals/CreateUpdateBookModal'
-import { isThereToken } from './services/AuthService'
+import { isUserLoggedIn } from './services/AuthService'
 import './App.css'
 import { isAdmin, isLibrarian } from './jwt/JwtRoleChecker'
 
@@ -29,7 +29,7 @@ const AppContent = () => {
       <div className='App-sideBar'>
         <NavigationBar onNavClick={onNavClickHandler} />
         <SideBar
-          display={isThereToken() && (isAdmin() || isLibrarian())}
+          display={isUserLoggedIn() && (isAdmin() || isLibrarian())}
           onSideMenuItemClick={() => setShowCreateUpdateBookModal(true)}
         />
       </div>

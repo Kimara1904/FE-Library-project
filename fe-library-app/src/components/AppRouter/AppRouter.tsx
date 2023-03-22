@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import PrivateRouter from './PrivateRouter'
 import CreateUpdatePage from './pages/CreateUpdatePage'
-import { isThereToken } from '../../services/AuthService'
+import { isUserLoggedIn } from '../../services/AuthService'
 import BookDetail from '../BookDetail/BookDetail'
 
 const AppRouter = () => {
@@ -21,7 +21,7 @@ const AppRouter = () => {
         </Route>
         <Route path='/book_detail/:id' element={<BookDetail />} />
       </Route>
-      <Route path='/login' element={ !isThereToken() ? <LoginPage /> : <Navigate to='/home'/>} />
+      <Route path='/login' element={ !isUserLoggedIn() ? <LoginPage /> : <Navigate to='/home'/>} />
     </Routes>
   )
 }
