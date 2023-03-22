@@ -6,10 +6,6 @@
     height: 30px;
 }
 
-.search{
-    display: flex;
-    justify-content: center;
-}
 
 .logout_link{
     display: none;
