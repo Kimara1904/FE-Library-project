@@ -1,10 +1,14 @@
 @import '../../../variables.css';
 
-.book_card{
-    background-color: var(--orange_color);
+.book_wrapper{
     width: 250px;
     display: grid;
+}
+.book_card{
+    background-color: var(--orange_color);
+    display: grid;
     cursor: pointer;
+    box-shadow: 0 0 10px 10px;
 }
 
 .book_card img{

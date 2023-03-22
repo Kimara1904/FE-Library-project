@@ -32,6 +32,7 @@ const SearchBar = (props: SearchBarProps) => {
 
   const handleLogout = () => {
     sessionStorage.removeItem('token')
+    sessionStorage.removeItem('role')
   }
 
   const handleFilterHide = () => {

@@ -38,7 +38,7 @@ const HomePage = () => {
   useEffect(() => {
     getBooksPage({
       PageNumber: pageNumber,
-      PageLength: 15,
+      PageLength: 10,
       Order: orders,
       Where: [
         { Field: 'Title', Value: search, Operation: 2 },
@@ -73,7 +73,7 @@ const HomePage = () => {
   const handleBookListChange = () => {
     getBooksPage({
       PageNumber: 1,
-      PageLength: 15,
+      PageLength: 10,
       Order: orders,
       Where: [
         { Field: 'Title', Value: search, Operation: 2 },
@@ -99,7 +99,6 @@ const HomePage = () => {
             hasMore={!isResponseEmpty}
             loader={<h4>Loading...</h4>}
             className={styles.book}
-            endMessage={<h4>You saw all books :)</h4>}
             scrollThreshold='75%'
           >
             <BookList books={bookList} onBookListChange={handleBookListChange} />

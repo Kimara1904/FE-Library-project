@@ -18,6 +18,7 @@ interface BookProp{
 const BookCard = (props: BookProp) => {
   const navigator = useNavigate()
   const [ showUpdateModal, setShowUpdateModal ] = useState(false)
+  const [ available, setAvailable ]  = useState(props.book.Available)
 
   const isAdminOrLibrarian = isAdmin() || isLibrarian()
 
@@ -49,7 +50,7 @@ const BookCard = (props: BookProp) => {
     rentBook(props.book.Id.toString())
       .then(() => {
         alert('Book is rented successfully')
-        props.book.Available = props.book.Available - 1
+        setAvailable((prevState) => prevState - 1)
       })
       .catch(() => {
         alert('Error with renting book')
@@ -57,50 +58,56 @@ const BookCard = (props: BookProp) => {
   }
 
   return (
-    <div className={styles.book_card} onClick={handleBookCardClick}>
-      <img
-        src={
-          props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover
-        }
-        alt='Book cover'
-      />
-      <div className={styles.info}>
-        <label>Title: </label>
-        <div className={styles.data}>{props.book.Title}</div>
-      </div>
-      <div className={styles.info}>
-        <label>ISBN: </label>
-        <div className={styles.data}>{props.book.Isbn}</div>
-      </div>
-      <div className={styles.info}>
-        <label>Authors: </label>
-        <div className={styles.authors}>
-          {props.book.Authors.map((author) => (
-            <div className={styles.data} key={author.Id}>
-              {author.LastName + ' ' + author.FirstName}
-            </div>
-          ))}
+    <div className={styles.book_wrapper}>
+      <div className={styles.book_card} onClick={handleBookCardClick}>
+        <img
+          src={
+            props.book.Cover !== '' ? 'data:image/png;base64,' + props.book.Cover : DefaultBookCover
+          }
+          alt='Book cover'
+        />
+        <div className={styles.info}>
+          <label>Title: </label>
+          <div className={styles.data}>{props.book.Title}</div>
         </div>
-      </div>
-      <div className={styles.extra_func}>
-        {isUserLoggedIn() && <button onClick={handleRentBook} disabled={props.book.Available <= 0}>Rent</button>}
-        {isAdminOrLibrarian && (
-          <button className={styles.book_phone_button} onClick={handleModifyClick}>
-            Modify
-          </button>
-        )}
-        {isAdminOrLibrarian && (
-          <button
-            className={styles.book_desktop_button}
-            onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-              event.stopPropagation()
-              setShowUpdateModal(true)
-            }}
-          >
-            Modify
-          </button>
-        )}
-        {isAdminOrLibrarian && <button onClick={handleDeleteClick}>Delete</button>}
+        <div className={styles.info}>
+          <label>ISBN: </label>
+          <div className={styles.data}>{props.book.Isbn}</div>
+        </div>
+        <div className={styles.info}>
+          <label>Authors: </label>
+          <div className={styles.authors}>
+            {props.book.Authors.map((author) => (
+              <div className={styles.data} key={author.Id}>
+                {author.LastName + ' ' + author.FirstName}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.extra_func}>
+          {isUserLoggedIn() && (
+            <button onClick={handleRentBook} disabled={available <= 0}>
+              Rent
+            </button>
+          )}
+          {isAdminOrLibrarian && (
+            <button className={styles.book_phone_button} onClick={handleModifyClick}>
+              Modify
+            </button>
+          )}
+          {isAdminOrLibrarian && (
+            <button
+              className={styles.book_desktop_button}
+              onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+                event.stopPropagation()
+                setShowUpdateModal(true)
+              }}
+            >
+              Modify
+            </button>
+          )}
+          {isAdminOrLibrarian && <button onClick={handleDeleteClick}>Delete</button>}
+        </div>
       </div>
       {showUpdateModal && (
         <CreateUpdateBookModal
@@ -108,9 +115,7 @@ const BookCard = (props: BookProp) => {
             props.onBookListModified
           }}
           id={props.book.Id}
-          onHideModal={() =>
-            setShowUpdateModal(false)
-          }
+          onHideModal={() => setShowUpdateModal(false)}
         />
       )}
     </div>

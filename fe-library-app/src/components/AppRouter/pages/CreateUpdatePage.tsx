@@ -31,7 +31,16 @@ const AddModifyPage = () => {
   }, [ id ])
   return (
     <div>
-      <CreateUpdateBookForm onCreateOrModifySuccess={() => navigator('/home')} book={book}/>
+      <CreateUpdateBookForm
+        onCreateOrModifySuccess={() => {
+          if (id) {
+            navigator('/book_detail/' + id)
+          } else {
+            navigator('/home')
+          }
+        }}
+        book={book}
+      />
     </div>
   )
 }

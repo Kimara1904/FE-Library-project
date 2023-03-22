@@ -5,6 +5,10 @@
     color: var(--dark_color);
 }
 
+.order_form button{
+    width: 50px;
+}
+
 .order_row{
     display: flex;
     justify-content: space-between;
