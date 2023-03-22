@@ -65,7 +65,8 @@
 
 .extra_func button[disabled]{
     background-color: var(--gray_color);
-    color: var(--dark_color)
+    color: var(--dark_color);
+    cursor: unset;
 }
 
 @media only screen and (min-width: 786px) {
